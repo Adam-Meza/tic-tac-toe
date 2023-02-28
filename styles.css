@@ -2,8 +2,35 @@ body{
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-
+  align-content: flex-end;
+  height: auto;
+  width: auto;
 }
-div, section, button {
+
+.main-container{
+  display:flex;
+  flex-direction: column;
+  align-content: center;
+}
+.player-box {
+  height: 300px;
+  width: 200px;
+}
+div, section, button, body{
   border: 2px red solid
 }
+.game-board {
+  width: 700px;
+  height: 700px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around
+
+}
+.board-square{
+  width: 180px;
+  height: 180px;
+
+}
+
