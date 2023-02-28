@@ -1,0 +1,9 @@
+body{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+
+}
+div, section, button {
+  border: 2px red solid
+}
