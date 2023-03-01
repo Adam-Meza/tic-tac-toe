@@ -26,11 +26,20 @@ div, section, button, body{
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around
-
+}
+.new-game-button {
+  height: 30px;
+  width: 60px;
 }
 .board-square{
   width: 180px;
   height: 180px;
+}
+
+.X {
 
 }
 
+.O {
+
+}
