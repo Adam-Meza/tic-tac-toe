@@ -1,6 +1,5 @@
 // Data Model
-var currentGame = new Game([new Player("Player 1", "X")],[new Player("Player 2", "X")])
-// var currentPlayer = {}
+var currentGame = new Game(new Player("Player 1", "X"), new Player("Player 2", "O"))
 var games = []
 
 // query selectors
@@ -11,9 +10,11 @@ var newGameBtn = document.querySelector('.js-new-game-button')
 
 
 //eventListeners
-// window.addEventListener('load', currentGame.resetBoard())
-gameBoard.addEventListener('click', function() {
+window.addEventListener('load', currentGame.resetBoard())
+gameBoard.addEventListener('click', function(event) {
   disableSquare()
+  currentGame.addChoice(currentGame.currentPlayer)
+  currentGame.trackTurn()
 })
 
 newGameBtn.addEventListener('click', function() {
