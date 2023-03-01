@@ -6,14 +6,14 @@ class Game {
     this.currentPlayer = firstPlayer
     this.availableSquares = ["ADG", "BD", "CDH", "AE", "BEGH", "CE", "AFH", "BF", "CFG",]
     this.choosenSquares = {
-      A: [],
-      B: [],
-      C: [],
-      D: [],
-      E: [],
-      F: [],
-      G: [],
-      H: [],
+        A: {X:[], O:[]},
+        B: {X:[], O:[]},
+        C: {X:[], O:[]},
+        D: {X:[], O:[]},
+        E: {X:[], O:[]},
+        F: {X:[], O:[]},
+        G: {X:[], O:[]},
+        H: {X:[], O:[]},
       }
     }
 
@@ -26,19 +26,24 @@ class Game {
     }
   };
 
-  addChoice(currentPlayer) {
-    var playerLetter = currentPlayer.letter
-    for (var i = 0; i < event.target.id.length; i++) {
-      this.choosenSquares[event.target.id.charAt(i)].push(playerLetter)
+  addChoice() {
+    var playerLetter = this.currentPlayer.letter
+    var squareId = event.target.id
+    for (var i = 0; i < squareId.length; i++) {
+      this.choosenSquares[squareId.charAt(i)][playerLetter].push(playerLetter)
     }
+    currentGame.checkWinConditions()
   }
 
-  checkWinConditions(currentPlayerInst) {
-    // instead of adding the square to the iwn condition add the oplayer's identifier
-// ,aybe use a case here to check ["X", etc ] or [O"]
-// this is gonna trigger on click after the square has been assigned
-// this is gonna look at every array for each player and determine if there was a win
-// then; it'll look if there are still squares left if not it declares a draw
+  checkWinConditions() {
+    var winConArray = ""
+    for (var i = 65; i < 72; i++) {
+      winConArray = this.choosenSquares[String.fromCharCode(i)][this.currentPlayer.letter]
+      if (winConArray.length === 3) {
+        gameBoard.disabled = true
+        console.log("test")
+      }
+    }
   };
 
   resetBoard() {
