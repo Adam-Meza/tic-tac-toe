@@ -1,29 +1,29 @@
 // GLOBAL DATA MODEL //
-var currentGame = new Game(new Player("Player 1", "X", "./assets/X_icon.jpg"), new Player("Player 2", "O", "./assets/O_icon.jpg"))
-var games = []
+var currentGame = new Game(new Player("Player 1", "X", "./assets/X_icon.jpg"), new Player("Player 2", "O", "./assets/O_icon.jpg"));
+var games = [];
 
 // QUERY SELECTORS //
-var turnHeader = document.querySelector('.js-turn-header')
-var gameBoard = document.querySelector('.js-game-board')
-var boardSquares = document.querySelectorAll('.js-board-square')
-var winBoxHeader = document.querySelectorAll('.js-win-box')
-var winCount = document.querySelectorAll('.js-win-count')
-var newGameBtn = document.querySelector('.js-new-game-button')
+var turnHeader = document.querySelector('.js-turn-header');
+var gameBoard = document.querySelector('.js-game-board');
+var boardSquares = document.querySelectorAll('.js-board-square');
+var winBoxHeader = document.querySelectorAll('.js-win-box');
+var winCount = document.querySelectorAll('.js-win-count');
+var newGameBtn = document.querySelector('.js-new-game-button');
 
 // EVENT LISTENERS // 
-window.addEventListener('load', setUpFirstGame)
+window.addEventListener('load', setUpFirstGame);
 
 for (var i = 0; i < boardSquares.length; i++) {
-  boardSquares[i].addEventListener('click', function(event) {
-    updateDM()
-    updateDOM()
+  boardSquares[i].addEventListener('click', function() {
+    updateDM();
+    updateDOM();
     currentGame.trackTurn();
   }
 )}
 
 newGameBtn.addEventListener('click', function() {
-  updateDMForNewGame()
-  updateDOMForNewGame()
+  updateDMForNewGame();
+  updateDOMForNewGame();
 })
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
@@ -62,10 +62,7 @@ function updateDOMForNewGame() {
 function updateTargetSquare() {
   event.target.disabled = true;
   event.target.classList.add(currentGame.currentPlayer.letter);
-  console.log(currentGame)
-  console.log(currentGame.currentPlayer)
-  console.log(currentGame.currentPlayer.token)
-  event.target.setAttribute("src", currentGame.currentPlayer.token);
+  event.target.innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
 };
 
 function disableBoardSqaures() {
@@ -95,6 +92,7 @@ function resetDOM() {
     boardSquares[i].disabled = false;
     boardSquares[i].classList.remove("X");
     boardSquares[i].classList.remove("O");
+    boardSquares[i].innerHTML = ""
   };
 };
 
