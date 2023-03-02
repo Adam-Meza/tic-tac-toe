@@ -5,32 +5,57 @@ var games = []
 // query selectors
 var gameBoard = document.querySelector('.game-board')
 var boardSquares = document.querySelectorAll('.board-square')
-
+var playerBoxHeader = document.querySelectorAll('.player-box')
+var turnHeader = document.querySelector('.turn-header')
 var newGameBtn = document.querySelector('.js-new-game-button')
 
-
 //eventListeners
-window.addEventListener('load', currentGame.resetBoard())
-gameBoard.addEventListener('click', function(event) {
-  disableSquare()
-  currentGame.addChoice(currentGame.currentPlayer)
-  currentGame.trackTurn()
-})
+// window.addEventListener('load', currentGame.initiateNewGame())
+
+for (var i = 0; i < boardSquares.length; i++) {
+  boardSquares[i].addEventListener('click', function(event) {
+    currentGame.addChoice()
+    currentGame.checkWinConditions();
+    currentGame.trackTurn();
+    disableSquare()
+    disableBoardSqaures();
+  })
+}
 
 newGameBtn.addEventListener('click', function() {
-  activateButtons()
-  currentGame.resetBoard()
+  currentGame.initiateNewGame()
+  resetDOM()
+  activateSquares()
 })
 
-
-
 // functions 
-    // pass turn, by accessing the firstPlay and secPlay and sswitching
-
 function disableSquare() {
   event.target.disabled = true
 }
 
-function activateButtons(){
+function disableBoardSqaures() {
+  for (var i = 0; i < boardSquares.length; i++) {
+    if (currentGame.checkWinConditions()) {
+      boardSquares[i].disabled = true
+    } 
+  }
+}
+    
+function activateSquares () {
+  for (var i = 0; i < boardSquares.length; i++) {
+    boardSquares[i].disabled = false
+  } 
+}
+
+function updateTurnHeader() {
+  turnHeader.innerHTML = `It's ${this.currentPlayer}'s Turn!`
+}
+
+function resetDOM() {
+  for (var i = 0; i < boardSquares.length; i++) {
+    boardSquares[i].disabled = false;
+    boardSquares[i].classList.remove("X");
+    boardSquares[i].classList.remove("O");
+    };
 
 }
