@@ -3,33 +3,40 @@
   <head>
     <title>Tic Tac Toe!</title>
     <meta charset="utf-8">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="player-box" name="player-1">
-      <h2></h2>
-      <p><p>
-      <p>wins</p>
+    <div class="player-box">
+      <h1 class="player-name player-name-js">Player 1</h1>
+      <div class="win-box js-win-box" name="player-1">
+        <p class="win-count js-win-count">0<p>
+        <p class="wins">wins</p>
+      </div>
     </div>
     <section class="main-container">
-      <h1>TURN</h1>
-      <section class="game-board">
-        <button class="board-square" id="ADG" src="">test</button>
-        <button class="board-square" id="BD" src="">test</button>
-        <button class="board-square" id="CDH" src="">test</button>
-        <button class="board-square" id="AE" src="">test</button>
-        <button class="board-square" id="BEGH" src="">test</button>
-        <button class="board-square" id="CE" src="">test</button>
-        <button class="board-square" id="AFH" src="">test</button>
-        <button class="board-square" id="BF" src="">test</button>
-        <button class="board-square" id="CFG" src="">test</button>
+      <h1 class="turn-header js-turn-header"></h1>
+      <section class="game-board js-game-board">
+        <button class="board-square js-board-square" id="ADG" ></button>
+        <button class="board-square js-board-square" id="BD" src=""></button>
+        <button class="board-square js-board-square" id="CDH" src=""></button>
+        <button class="board-square js-board-square" id="AE" src=""></button>
+        <button class="board-square js-board-square" id="BEGH" src=""></button>
+        <button class="board-square js-board-square" id="CE" src=""></button>
+        <button class="board-square js-board-square" id="AFH" src=""></button>
+        <button class="board-square js-board-square" id="BF" src=""></button>
+        <button class="board-square js-board-square" id="CFG" src=""></button>
       </section>
-      <button class="js-new-game-button new-game-button"></button>
+      <button class="js-new-game-button new-game-button">New Game</button>
     </section>
-    <div class="player-box" name="player-2">
-      <h2></h2>
-      <p><p>
-      <p>wins</p>
+    <div class="player-box">
+      <h1 class="player-name player-name-js">Player 2</h1>
+      <div class="win-box js-win-box" name="player-2">
+        <p class="win-count js-win-count">0<p>
+        <p class="wins">wins</p>
+      </div>
     </div>
   </body>
   <script type="text/javascript" src="./src/player.js"></script>
