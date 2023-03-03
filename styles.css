@@ -1,3 +1,22 @@
+/* colors;
+
+background: #fdfff1
+
+greenlight #e1e9ba
+greendark #a8bd82
+
+bluelight #dceff3
+bluedark #8db4ca
+
+pinklight f5ddf1
+pinkdark e5a6c0
+
+brownlight #eee0c0
+browndark #b17822
+
+orange light
+orange dark */
+
 body {
   display: flex;
   flex-direction: row;
@@ -5,7 +24,7 @@ body {
   align-items: center;
   width: auto;
   height: auto;
-  background-color: #fbfeeb;
+  background-color: #fdfff1;
 }
 
 body, .main-container, .player-box, .new-game-button {
