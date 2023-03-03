@@ -9,16 +9,27 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <div class="player-box">
-      <h1 class="player-name player-name-js">Player 1</h1>
+    <div class="player-box js-player-box hidden">
+      <h1 class="player-name js-player-name"></h1>
       <div class="win-box js-win-box" name="player-1">
         <p class="win-count js-win-count">0<p>
         <p class="wins">wins</p>
       </div>
     </div>
     <section class="main-container">
-      <h1 class="turn-header js-turn-header"></h1>
-      <section class="game-board js-game-board">
+      <h1 class="turn-header js-turn-header">Welcome! Let's Play Tic-Tac-Toe!
+      </h1>
+      <form class="name-form js-name-form">
+        <h1 class="name-prompt name-prompt">What's Your Name?</h1>
+        <input type="text" class="name-input js-name-input">
+        <button class="play-btn js-play-btn">Continue as Guest</button>
+      </form>
+      <form class="second-name-form js-second-name-form hidden">
+        <h1 class="name-prompt name-prompt">What's Your Name?</h1>
+        <input type="text" class="name-input js-name-input">
+        <button class="second-play-btn js-play-btn">Continue as Guest</button>
+      </form>
+      <section class="game-board js-game-board hidden">
         <button class="board-square js-board-square" id="ADG" ></button>
         <button class="board-square js-board-square" id="BD" src=""></button>
         <button class="board-square js-board-square" id="CDH" src=""></button>
@@ -29,10 +40,10 @@
         <button class="board-square js-board-square" id="BF" src=""></button>
         <button class="board-square js-board-square" id="CFG" src=""></button>
       </section>
-      <button class="js-new-game-button new-game-button">New Game</button>
+      <button class="js-new-game-button new-game-button hidden">New Game</button>
     </section>
-    <div class="player-box">
-      <h1 class="player-name player-name-js">Player 2</h1>
+    <div class="player-box js-player-box hidden">
+      <h1 class="player-name js-player-name"></h1>
       <div class="win-box js-win-box" name="player-2">
         <p class="win-count js-win-count">0<p>
         <p class="wins">wins</p>
