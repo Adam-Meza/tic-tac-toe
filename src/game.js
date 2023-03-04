@@ -7,6 +7,7 @@ class Game {
     this.xPlayer = {};
     this.turn = 1;
     this.isOver = false;
+    this.isDraw = false;
     this.availableSquares = ["ADG", "BD", "CDH", "AE", "BEGH", "CE", "AFH", "BF", "CFG",];
     this.choosenSquares = {
         A: {X:[], O:[]},
@@ -75,6 +76,7 @@ class Game {
   checkForDraw() {
     if (this.availableSquares.length === 0){
       this.isOver = true
+      this.isDraw = true
     };
   };
 

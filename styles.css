@@ -136,6 +136,10 @@ button {
   font-family: 'Amatic SC', cursive;
 }
 
+button:active {
+transform: translateY(3px)
+}
+
 .new-game-button, 
 .play-btn, 
 .second-play-btn{
@@ -195,10 +199,17 @@ button {
 .O {
   background-color: #e1e9ba;
 }
+  .O:hover {
+  background-color: #e1e9ba;
+  }
 
 .X {
   background-color: #f5ddf1;
 }
+
+  .X:hover {
+    background-color: #f5ddf1;
+  }
 
 .hidden {
   display: none;

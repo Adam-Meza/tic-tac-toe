@@ -146,9 +146,9 @@ function disableBoardSqaures() {
 };;
 
 function updateWinHeader() {
-  if (currentGame.availableSquares.length === 0 && currentGame.checkWinOrDraw() === false) {
+  if (currentGame.isDraw) {
     turnHeader.innerHTML = "It's a Draw!";
-  } else if (currentGame.availableSquares.length > 0) {
+  } else {
     turnHeader.innerHTML = `${currentGame.currentPlayer.name} wins!`;
 };
 }
