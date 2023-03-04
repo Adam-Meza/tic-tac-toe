@@ -18,12 +18,12 @@ orange light
 orange dark */
 
 body {
+  width: auto;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  width: auto;
-  height: auto;
   background-color: #fdfff1;
 }
 
@@ -32,12 +32,20 @@ body, .main-container, .player-box, .new-game-button {
   font-family: 'Amatic SC', cursive;
 }
 
+.main-container,
+.player-box,
+.win-box,
+.name-form, 
+.second-name-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
 .main-container{
   height: 800px;
-  display:flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
 }
 
 p {
@@ -46,34 +54,32 @@ p {
 }
 
 .player-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   margin: 0px 70px 100px 70px;
+}
+button {
+  cursor: pointer;
+}
+
+button,
+.win-box, 
+.name-form, 
+.second-name-form,
+.name-input,
+.board-square {
+  border-radius: 30px;
+  border: none
 }
 
 .win-box {
   width: 200px;
   height: 300px;
-  border-radius: 30px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
-  align-items: center;
   background-color: #eee0c0;
 }
 
 .wins {
   width: 60px;
   font-size: 40px;
-}
-
-/* div, section, button, body, h1, .player-box, p, .name-input, form, .play-btn{
-  border: 2px red solid;
-} */
-
-button, input {
-  border: none
 }
 
 .game-board, .name-form, .second-name-form{
@@ -88,13 +94,9 @@ button, input {
 .name-form, .second-name-form{
   background-color: #dceff3;
   color:#8db4ca;
-  border-radius: 30px;
   margin-bottom: 100px;
   font-size: 50px;
-  display: flex;
-  flex-direction: column;
   justify-content: space-around;
-  align-items: center;
 }
 
 .second-name-form {
@@ -105,16 +107,15 @@ button, input {
 .name-prompt{
   margin: 10px;
 }
+
 .name-input {
-  height: 70px;
   width: 300px;
-  border-radius: 30px;
+  height: 70px;
 }
 
 .new-game-button, .play-btn, .second-play-btn{
   width: 200px;
   height: 80px;
-  border-radius: 30px;
   font-size: 30px;
   padding: 5px 20px 5px 20px;
   background-color: #eee0c0;
@@ -135,7 +136,6 @@ button, input {
 .board-square {
   width: 120px;
   height: 120px;
-  border-radius: 30px;
   background-color: #dceff3;
 }
 
@@ -151,10 +151,10 @@ button, input {
 }
 
 .win-count {
-  padding-top: 100px;
-  font-size: 100px;
   width: 20px;
   height: 80px;
+  font-size: 100px;
+  padding-top: 100px;
   margin: 0px;
 }
 

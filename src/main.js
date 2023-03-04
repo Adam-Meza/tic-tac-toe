@@ -1,4 +1,5 @@
 // GLOBAL DATA MODEL //
+var currentGame = {};
 var firstPlayer = null;
 var secondPlayer = null;
 
@@ -23,17 +24,16 @@ for (var i = 0; i < boardSquares.length; i++) {
   boardSquares[i].addEventListener('click', function() {
     updateDM();
     updateDOM();
-    setTimeout(isGameOver, 4000);
-    currentGame.trackTurn();
+    
   }
 )};
 
 newGameBtn.addEventListener('click', function() {
-  updateDMForNewGame();
-  updateDOMForNewGame();
+  updateDMforNewGame();
+  updateDOMforNewGame();
 });
 
-for (var i = 0; i <playBtns.length; i++) {
+for (var i = 0; i < playBtns.length; i++) {
   playBtns[i].addEventListener('click', function(event){
     event.preventDefault();
     storeNameInput();
@@ -53,48 +53,48 @@ function pageNagivation(){
     hide(nameForm)
     show(secondNameForm)
   } else if (firstPlayer && secondPlayer) {
-    setUpFirstGame()
+    updateDMforFirstGame();
+    updateDOMforFirstGame();
   };
-};
-
-function setUpFirstGame(){
-  updateDMforFirstGame();
-  updateDOMforFirstGame();
 };
 
 function updateDM() {
   currentGame.addChoice();
-  currentGame.checkWinConditions();
   currentGame.updateAvailableSquaresArray();
+  currentGame.checkWinOrDraw();
 };
 
 function updateDOM() {
   updateTargetSquare();
-  disableBoardSqaures();
-  updateTurnHeader();
+  if (currentGame.isOver) { 
+    disableBoardSqaures();
+    updateWinHeader();
+  } else {
+    currentGame.trackTurn();
+    updateTurnHeader()
+  };
 };
 
-function updateDMForNewGame() {
+function setUpNewGame() {
+    updateDMforNewGame();
+    updateDOMforNewGame();
+};
+
+function updateDMforNewGame() {
   currentGame.initiateNewGame();
   currentGame.establishXandOPlayers();
 };
 
-function updateDOMForNewGame() {
+function updateDOMforNewGame() {
   activateSquares();
   resetDOM();
   updateTurnHeader();
   updateWinCounter();
 }
 
-function isGameOver() {
-  if (currentGame.isOver) {
-    updateDMForNewGame();
-    updateDOMForNewGame();
-  };
-};
 
 function updateDMforFirstGame(){
-  currentGame = new Game (firstPlayer, secondPlayer)
+  currentGame = new Game(firstPlayer, secondPlayer)
   currentGame.establishXandOPlayers();
 };
 
@@ -113,13 +113,13 @@ function updateDOMforFirstGame(){
 
 function storeNameInput(){
   if (nameInputs[0].value && !firstPlayer){
-    firstPlayer = new Player(`${nameInputs[0].value}`, "X", "./assets/X_icon.jpg");
+    firstPlayer = new Player ( `${nameInputs[0].value}`, "X", "./assets/X_icon.jpg");
   } else if (nameInputs[1].value && !secondPlayer) {
-    secondPlayer = new Player(`${nameInputs[1].value}`, "O","./assets/O_icon.jpg");
+    secondPlayer = new Player ( `${nameInputs[1].value}`, "O", "./assets/O_icon.jpg");
   } else if (!nameInputs[0].value && !firstPlayer) {
-    firstPlayer = new Player("Player 1", "X", "./assets/X_icon.jpg");
+    firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
   } else if (!nameInputs[1].value && !secondPlayer) {
-    secondPlayer = new Player("Player 2", "O", "./assets/O_icon.jpg");
+    secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
   };
   clearInput();
 };
@@ -129,8 +129,6 @@ function clearInput(){
   nameInputs[1].value = "";
 };
 
-
-
 function updateTargetSquare() {
   event.target.disabled = true;
   event.target.classList.add(currentGame.currentPlayer.letter);
@@ -138,20 +136,22 @@ function updateTargetSquare() {
 };
 
 function disableBoardSqaures() {
-  if (currentGame.isOver) {
-    for (var i = 0; i < boardSquares.length; i++) {
-      boardSquares[i].disabled = true;
-    };
+  for (var i = 0; i < boardSquares.length; i++) {
+    boardSquares[i].disabled = true;
+  };
+};;
+
+function updateWinHeader() {
+  if (currentGame.availableSquares.length > 0) {
+    turnHeader.innerHTML = `${currentGame.currentPlayer.name} wins!`;
+  } else {
+    turnHeader.innerHTML = "It's a Draw!";
   };
 };
 
 function updateTurnHeader() {
-  if (currentGame.isOver) {
-    turnHeader.innerHTML = `${currentGame.currentPlayer.name} wins!`;
-  } else {
-    turnHeader.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
-  };
-};
+  turnHeader.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
+}
 
 function activateSquares () {
   for (var i = 0; i < boardSquares.length; i++) {
@@ -180,3 +180,4 @@ function hide(element){
 function show(element){
   element.classList.remove('hidden');
 };
+

@@ -41,14 +41,17 @@ class Game {
     };
   };
 
-  checkWinConditions() {
-    var winConArray = "";
+  checkWinOrDraw() {
+    var winConArray = ""
     for (var i = 65; i < 73; i++) {
       winConArray = this.choosenSquares[String.fromCharCode(i)][this.currentPlayer.letter]
       if (winConArray.length === 3) {
+        console.log(winConArray)
         this.isOver = true;
         this.currentPlayer.increaseWins();
-      };
+      } else {
+        this.checkForDraw();
+      }
     };
   };
 
@@ -70,6 +73,11 @@ class Game {
     };
   };
 
+  checkForDraw(){
+    if (this.availableSquares.length < 1){
+      this.isOver
+    }
+  }
 
   
 }
