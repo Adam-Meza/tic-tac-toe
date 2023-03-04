@@ -27,7 +27,11 @@ body {
   background-color: #fdfff1;
 }
 
-body, .main-container, .player-box, .new-game-button {
+body,
+.main-container,
+.player-box,
+.new-game-button,
+.name-input{
   color: #b17822;
   font-family: 'Amatic SC', cursive;
 }
@@ -82,7 +86,9 @@ button,
   font-size: 40px;
 }
 
-.game-board, .name-form, .second-name-form{
+.game-board, 
+.name-form,
+.second-name-form{
   width: 450px;
   height: 450px;
   display: flex;
@@ -91,7 +97,8 @@ button,
   justify-content: space-around
 }
 
-.name-form, .second-name-form{
+.name-form,
+.second-name-form{
   background-color: #dceff3;
   color:#8db4ca;
   margin-bottom: 100px;
@@ -108,12 +115,19 @@ button,
   margin: 10px;
 }
 
-.name-input {
+.name-input{
   width: 300px;
   height: 70px;
+  padding:4px;
+  font-size: 45px;
+  text-indent: 10px;
+  outline: none;
+  text-align: center;
 }
 
-.new-game-button, .play-btn, .second-play-btn{
+.new-game-button, 
+.play-btn, 
+.second-play-btn{
   width: 200px;
   height: 80px;
   font-size: 30px;
@@ -144,7 +158,8 @@ button,
   height: 80px;
 }
 
-.turn-header, .player-name{
+.turn-header,
+.player-name{
   font-size: 56px;
   padding-top: 100px;
   margin: 10px;
