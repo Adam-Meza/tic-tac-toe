@@ -12,7 +12,6 @@ var turnHeader = document.querySelector('.js-turn-header');
 var winCounts = document.querySelectorAll('.js-win-count');
 var nameInput = document.querySelector('.js-name-input');
 var nameForm = document.querySelector('.js-name-form');
-// var secondNameForm = document.querySelector('.js-second-name-form');
 var playerNameTitles = document.querySelectorAll('.js-player-name');
 var newGameBtn = document.querySelector('.js-new-game-button');
 
@@ -41,27 +40,20 @@ playBtn.addEventListener('click', function(event){
 function pageNagivation() {
   clearInput();
   if (!secondPlayer) {
-    nameForm.classList = "second-name form js-name-form"
+    nameForm.classList = "second-name-form js-name-form"
     playBtn.classList = "second-play-btn js-play-btn"
-
-
-    // hide(nameForm);
-    // show(secondNameForm);
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
   };
 };
 
+//nameInput.addEventListener('click', function(){
+//   });
 
-
-for (var i = 0; i < nameInputs.length; i++) {
-  nameInputs[i].addEventListener('click', function(){
-  });
-};
 function storeNameInput() {
   if (nameInput.value && !firstPlayer) {
-    firstPlayer = new Player ( `${nameInputs.value}`, "X", "./assets/X_icon.jpg");
+    firstPlayer = new Player ( `${nameInput.value}`, "X", "./assets/X_icon.jpg");
   } else if (nameInput.value && !secondPlayer) {
     secondPlayer = new Player ( `${nameInput.value}`, "O", "./assets/O_icon.jpg");
   } else if (!nameInput.value && !firstPlayer) {
@@ -115,7 +107,7 @@ function updateDMforFirstGame() {
 };
 
 function updateDOMforFirstGame() {
-  hide(secondNameForm);
+  hide(nameForm);
   show(gameBoard);
   show(newGameBtn);
   show(playerBoxes[0]);
@@ -129,8 +121,7 @@ function updateDOMforFirstGame() {
 
 
 function clearInput(){
-  nameInputs[0].value = "";
-  nameInputs[1].value = "";
+  nameInput.value = "";
 };
 
 function updateTargetSquare() {
