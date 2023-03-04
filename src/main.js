@@ -10,14 +10,13 @@ var playerBoxes = document.querySelectorAll('.js-player-box')
 var winBoxHeaders = document.querySelectorAll('.js-win-box');
 var turnHeader = document.querySelector('.js-turn-header');
 var winCounts = document.querySelectorAll('.js-win-count');
-var nameInputs = document.querySelectorAll('.js-name-input');
+var nameInput = document.querySelector('.js-name-input');
 var nameForm = document.querySelector('.js-name-form');
-var secondNameForm = document.querySelector('.js-second-name-form');
+// var secondNameForm = document.querySelector('.js-second-name-form');
 var playerNameTitles = document.querySelectorAll('.js-player-name');
 var newGameBtn = document.querySelector('.js-new-game-button');
 
 // EVENT LISTENERS // 
-// window.addEventListener('load', setUpFirstGame);
 
 for (var i = 0; i < boardSquares.length; i++) {
   boardSquares[i].addEventListener('click', function() {
@@ -31,41 +30,45 @@ for (var i = 0; i < boardSquares.length; i++) {
     updateDOMforNewGame();
   });
   
-var playBtns = document.querySelectorAll('.js-play-btn');
+var playBtn = document.querySelector('.js-play-btn');
 
-for (var i = 0; i < playBtns.length; i++) {
-  playBtns[i].addEventListener('click', function(event){
-    event.preventDefault();
-    storeNameInput();
-    pageNagivation();
-  }
-)};
+playBtn.addEventListener('click', function(event){
+  event.preventDefault();
+  storeNameInput();
+  pageNagivation();
+  });
 
 function pageNagivation() {
+  clearInput();
   if (!secondPlayer) {
-    hide(nameForm);
-    show(secondNameForm);
+    nameForm.classList = "second-name form js-name-form"
+    playBtn.classList = "second-play-btn js-play-btn"
+
+
+    // hide(nameForm);
+    // show(secondNameForm);
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
   };
 };
 
+
+
 for (var i = 0; i < nameInputs.length; i++) {
   nameInputs[i].addEventListener('click', function(){
   });
 };
 function storeNameInput() {
-  if (nameInputs[0].value && !firstPlayer) {
-    firstPlayer = new Player ( `${nameInputs[0].value}`, "X", "./assets/X_icon.jpg");
-  } else if (nameInputs[1].value && !secondPlayer) {
-    secondPlayer = new Player ( `${nameInputs[1].value}`, "O", "./assets/O_icon.jpg");
-  } else if (!nameInputs[0].value && !firstPlayer) {
+  if (nameInput.value && !firstPlayer) {
+    firstPlayer = new Player ( `${nameInputs.value}`, "X", "./assets/X_icon.jpg");
+  } else if (nameInput.value && !secondPlayer) {
+    secondPlayer = new Player ( `${nameInput.value}`, "O", "./assets/O_icon.jpg");
+  } else if (!nameInput.value && !firstPlayer) {
     firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
-  } else if (!nameInputs[1].value && !secondPlayer) {
+  } else if (!nameInput.value && !secondPlayer) {
     secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
   };
-  clearInput();
 };
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
