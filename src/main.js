@@ -4,18 +4,17 @@ var firstPlayer = null;
 var secondPlayer = null;
 
 // QUERY SELECTORS //
-var turnHeader = document.querySelector('.js-turn-header');
 var gameBoard = document.querySelector('.js-game-board');
 var boardSquares = document.querySelectorAll('.js-board-square');
 var playerBoxes = document.querySelectorAll('.js-player-box')
 var winBoxHeaders = document.querySelectorAll('.js-win-box');
+var turnHeader = document.querySelector('.js-turn-header');
 var winCounts = document.querySelectorAll('.js-win-count');
-var newGameBtn = document.querySelector('.js-new-game-button');
-var playBtns = document.querySelectorAll('.js-play-btn');
-var playerNameTitles = document.querySelectorAll('.js-player-name');
 var nameInputs = document.querySelectorAll('.js-name-input');
 var nameForm = document.querySelector('.js-name-form');
 var secondNameForm = document.querySelector('.js-second-name-form');
+var playerNameTitles = document.querySelectorAll('.js-player-name');
+var newGameBtn = document.querySelector('.js-new-game-button');
 
 // EVENT LISTENERS // 
 // window.addEventListener('load', setUpFirstGame);
@@ -24,14 +23,15 @@ for (var i = 0; i < boardSquares.length; i++) {
   boardSquares[i].addEventListener('click', function() {
     updateDM();
     updateDOM();
-    
   }
-)};
-
-newGameBtn.addEventListener('click', function() {
-  updateDMforNewGame();
-  updateDOMforNewGame();
-});
+  )};
+  
+  newGameBtn.addEventListener('click', function() {
+    updateDMforNewGame();
+    updateDOMforNewGame();
+  });
+  
+var playBtns = document.querySelectorAll('.js-play-btn');
 
 for (var i = 0; i < playBtns.length; i++) {
   playBtns[i].addEventListener('click', function(event){
@@ -41,22 +41,35 @@ for (var i = 0; i < playBtns.length; i++) {
   }
 )};
 
-for (var i = 0; i < nameInputs.length; i++){
-  nameInputs[i].addEventListener('click', function(){
-  });
-};
-
-// DOM MANIPULATION - BUNDLE FUNCTIONS //
-
-function pageNagivation(){
+function pageNagivation() {
   if (!secondPlayer) {
-    hide(nameForm)
-    show(secondNameForm)
+    hide(nameForm);
+    show(secondNameForm);
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
   };
 };
+
+for (var i = 0; i < nameInputs.length; i++) {
+  nameInputs[i].addEventListener('click', function(){
+  });
+};
+function storeNameInput() {
+  if (nameInputs[0].value && !firstPlayer) {
+    firstPlayer = new Player ( `${nameInputs[0].value}`, "X", "./assets/X_icon.jpg");
+  } else if (nameInputs[1].value && !secondPlayer) {
+    secondPlayer = new Player ( `${nameInputs[1].value}`, "O", "./assets/O_icon.jpg");
+  } else if (!nameInputs[0].value && !firstPlayer) {
+    firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
+  } else if (!nameInputs[1].value && !secondPlayer) {
+    secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
+  };
+  clearInput();
+};
+
+// DOM MANIPULATION - BUNDLE FUNCTIONS //
+
 
 function updateDM() {
   currentGame.addChoice();
@@ -69,9 +82,10 @@ function updateDOM() {
   if (currentGame.isOver) { 
     disableBoardSqaures();
     updateWinHeader();
+    setTimeout(setUpNewGame, 4000);
   } else {
     currentGame.trackTurn();
-    updateTurnHeader()
+    updateTurnHeader();
   };
 };
 
@@ -90,15 +104,14 @@ function updateDOMforNewGame() {
   resetDOM();
   updateTurnHeader();
   updateWinCounter();
-}
+};
 
-
-function updateDMforFirstGame(){
-  currentGame = new Game(firstPlayer, secondPlayer)
+function updateDMforFirstGame() {
+  currentGame = new Game(firstPlayer, secondPlayer);
   currentGame.establishXandOPlayers();
 };
 
-function updateDOMforFirstGame(){
+function updateDOMforFirstGame() {
   hide(secondNameForm);
   show(gameBoard);
   show(newGameBtn);
@@ -111,18 +124,6 @@ function updateDOMforFirstGame(){
 
 // DOM MANIPULATION - ATOMIC FUNCTIONS //
 
-function storeNameInput(){
-  if (nameInputs[0].value && !firstPlayer){
-    firstPlayer = new Player ( `${nameInputs[0].value}`, "X", "./assets/X_icon.jpg");
-  } else if (nameInputs[1].value && !secondPlayer) {
-    secondPlayer = new Player ( `${nameInputs[1].value}`, "O", "./assets/O_icon.jpg");
-  } else if (!nameInputs[0].value && !firstPlayer) {
-    firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
-  } else if (!nameInputs[1].value && !secondPlayer) {
-    secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
-  };
-  clearInput();
-};
 
 function clearInput(){
   nameInputs[0].value = "";
@@ -142,12 +143,12 @@ function disableBoardSqaures() {
 };;
 
 function updateWinHeader() {
-  if (currentGame.availableSquares.length > 0) {
-    turnHeader.innerHTML = `${currentGame.currentPlayer.name} wins!`;
-  } else {
+  if (currentGame.availableSquares.length === 0 && currentGame.checkWinOrDraw() === false) {
     turnHeader.innerHTML = "It's a Draw!";
-  };
+  } else if (currentGame.availableSquares.length > 0) {
+    turnHeader.innerHTML = `${currentGame.currentPlayer.name} wins!`;
 };
+}
 
 function updateTurnHeader() {
   turnHeader.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
@@ -180,4 +181,3 @@ function hide(element){
 function show(element){
   element.classList.remove('hidden');
 };
-
