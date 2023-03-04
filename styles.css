@@ -57,13 +57,6 @@ p {
   height: 43%;
 }
 
-.player-box {
-  margin: 0px 70px 100px 70px;
-}
-button {
-  cursor: pointer;
-}
-
 button,
 .win-box, 
 .name-form, 
@@ -71,7 +64,12 @@ button,
 .name-input,
 .board-square {
   border-radius: 30px;
-  border: none
+  border: none;
+  outline: none;
+}
+
+.player-box {
+  margin: 0px 70px 100px 70px;
 }
 
 .win-box {
@@ -81,14 +79,21 @@ button,
   background-color: #eee0c0;
 }
 
-.wins {
-  width: 60px;
-  font-size: 40px;
-}
+  .win-count {
+    width: 20px;
+    height: 80px;
+    font-size: 100px;
+    padding-top: 100px;
+    margin: 0px;
+  }
+  
+  .wins {
+    width: 60px;
+    font-size: 40px;
+  }
 
 .game-board, 
-.name-form,
-.second-name-form{
+form {
   width: 450px;
   height: 450px;
   display: flex;
@@ -97,32 +102,38 @@ button,
   justify-content: space-around
 }
 
-.name-form,
-.second-name-form{
+form {
   background-color: #dceff3;
   color:#8db4ca;
   margin-bottom: 100px;
   font-size: 50px;
-  justify-content: space-around;
+  justify-content: center;
+  
 }
 
 .second-name-form {
-  background-color: #e1e9ba;
-  color:#a8bd82;
+background-color: #e1e9ba;
+color:#a8bd82;
 }
 
-.name-prompt{
-  margin: 10px;
-}
+    .name-prompt{
+      margin: 10px;
+    }
 
-.name-input{
-  width: 300px;
-  height: 70px;
-  padding:4px;
-  font-size: 45px;
-  text-indent: 10px;
-  outline: none;
-  text-align: center;
+    .name-input{
+      width: 300px;
+      height: 70px;
+      padding:4px;
+      font-size: 45px;
+      text-indent: 10px;
+      outline: none;
+      text-align: center;
+      margin: 50px;
+    }
+
+button {
+  cursor: pointer;
+  font-family: 'Amatic SC', cursive;
 }
 
 .new-game-button, 
@@ -135,17 +146,33 @@ button,
   background-color: #eee0c0;
 }
 
-.play-btn, .second-play-btn{
+.play-btn {
   color: #dceff3;
   background-color:#8db4ca;
-  font-family: 'Amatic SC', cursive;
-  margin: 30px;
 }
+
+  .play-btn:hover {
+    background-color: #6095b3;
+  }
+
+  .play-btn:active {
+    background-color: #6095b3;
+    transform: translateY(3px)
+  }
 
 .second-play-btn{
   background-color:#a8bd82;
   color: #e1e9ba;
 }
+
+  .second-play-btn:hover {
+    background-color: #88994b;
+  }
+
+  .second-play-btn:active {
+    background-color: #88994b;
+    transform: translateY(3px)
+  }
 
 .board-square {
   width: 120px;
@@ -153,24 +180,16 @@ button,
   background-color: #dceff3;
 }
 
-.board-square img{
-  width: 80px;
-  height: 80px;
-}
+  .board-square img{
+    width: 80px;
+    height: 80px;
+  }
 
 .turn-header,
 .player-name{
   font-size: 56px;
   padding-top: 100px;
   margin: 10px;
-}
-
-.win-count {
-  width: 20px;
-  height: 80px;
-  font-size: 100px;
-  padding-top: 100px;
-  margin: 0px;
 }
 
 .O {

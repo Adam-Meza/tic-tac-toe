@@ -14,8 +14,26 @@ var nameInput = document.querySelector('.js-name-input');
 var nameForm = document.querySelector('.js-name-form');
 var playerNameTitles = document.querySelectorAll('.js-player-name');
 var newGameBtn = document.querySelector('.js-new-game-button');
+var playBtn = document.querySelector('.js-play-btn');
 
 // EVENT LISTENERS // 
+
+nameInput.addEventListener('input', function(){
+  updateNameFormDOM() 
+  });
+
+function updateNameFormDOM(){
+  if (nameInput.value) {
+    playBtn.innerText = "Let's Play!"
+  } else {
+    playBtn.innerText = "Continue as Guest"
+  }
+}
+playBtn.addEventListener('click', function(event){
+  event.preventDefault();
+  storeNameInput();
+  pageNagivation();
+});
 
 for (var i = 0; i < boardSquares.length; i++) {
   boardSquares[i].addEventListener('click', function() {
@@ -25,17 +43,10 @@ for (var i = 0; i < boardSquares.length; i++) {
   )};
   
   newGameBtn.addEventListener('click', function() {
-    updateDMforNewGame();
-    updateDOMforNewGame();
-  });
-  
-var playBtn = document.querySelector('.js-play-btn');
+  updateDMforNewGame();
+  updateDOMforNewGame();
+});
 
-playBtn.addEventListener('click', function(event){
-  event.preventDefault();
-  storeNameInput();
-  pageNagivation();
-  });
 
 function pageNagivation() {
   clearInput();
@@ -48,8 +59,6 @@ function pageNagivation() {
   };
 };
 
-//nameInput.addEventListener('click', function(){
-//   });
 
 function storeNameInput() {
   if (nameInput.value && !firstPlayer) {
