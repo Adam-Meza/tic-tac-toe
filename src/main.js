@@ -85,7 +85,7 @@ function updateDOMforNewGame() {
 function updateDMforFirstGame() {
   currentGame = new Game(firstPlayer, secondPlayer);
   currentGame.establishXandOPlayers();
-  body.background = "./assets/trees.jpg"
+  body.background = "./assets/sun.jpg"
 };
   
 function updateDOMforFirstGame() {
