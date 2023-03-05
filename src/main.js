@@ -26,7 +26,11 @@ nameInput.addEventListener('input', function(){
 
 playBtn.addEventListener('click', function(event) {
   event.preventDefault();
-  storeNameInput();
+  if (!firstPlayer) {
+    makeFirstPlayer();
+  } else if (!secondPlayer) {
+    makeSecondPlayer()
+  }
   pageNagivation();
   }
 );
@@ -177,14 +181,22 @@ function show(element){
   element.classList.remove('hidden');
 };
 
-function storeNameInput() {
-  if (nameInput.value && !firstPlayer) {
+function makeFirstPlayer() {
+  /// maybe new funciton that checks if there;s already a player with this name
+  // if so it sets player one to taht obj instance
+  if (nameInput.value) {
+      /// maybe new funciton that checks if there;s already a player with this name
+  // if so it sets player one to taht obj instance
     firstPlayer = new Player ( `${nameInput.value}`, "X", "./assets/X_icon.jpg");
-  } else if (nameInput.value && !secondPlayer) {
-    secondPlayer = new Player ( `${nameInput.value}`, "O", "./assets/O_icon.jpg");
-  } else if (!nameInput.value && !firstPlayer) {
+  } else {
     firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
-  } else if (!nameInput.value && !secondPlayer) {
-    secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
+};
+}
+
+function makeSecondPlayer() {
+if (nameInput.value) {
+  secondPlayer = new Player ( `${nameInput.value}`, "O", "./assets/O_icon.jpg");
+} else if (!nameInput.value) {
+  secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
   };
 };
