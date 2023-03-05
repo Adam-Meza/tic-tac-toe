@@ -31,7 +31,8 @@ body,
 .main-container,
 .player-box,
 .new-game-button,
-.name-input{
+.name-input,
+.clear-storage-btn {
   color: #b17822;
   font-family: 'Amatic SC', cursive;
 }
@@ -142,7 +143,9 @@ transform: translateY(3px)
 
 .new-game-button, 
 .play-btn, 
-.second-play-btn{
+.second-play-btn,
+.clear-storage-btn
+{
   width: 200px;
   height: 80px;
   font-size: 30px;

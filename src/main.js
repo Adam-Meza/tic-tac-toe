@@ -15,7 +15,13 @@ var nameForm = document.querySelector('.js-name-form');
 var playerNameTitles = document.querySelectorAll('.js-player-name');
 var newGameBtn = document.querySelector('.js-new-game-button');
 var playBtn = document.querySelector('.js-play-btn');
-var body = document.querySelector('.body')
+var body = document.querySelector('.body');
+
+
+var clearBtn = document.querySelector('.js-clear-btn')
+clearBtn.addEventListener('click', function(){
+  localStorage.clear()
+})
 
 // EVENT LISTENERS // 
 
@@ -26,70 +32,31 @@ nameInput.addEventListener('input', function(){
 
 playBtn.addEventListener('click', function(event) {
   event.preventDefault();
-  storeNameInput();
-  pageNagivation();
+    if (!nameInput.value) {
+      makeGenericPlayer();
+    } else {
+      var userInput = nameInput.value.toLowerCase()
+      checkStorageForPlayer(userInput);
+    }
+    pageNagivation();
   }
 );
-  
-gameBoard.addEventListener('click', function() {
-  if (event.target.id) {
-    updateDM();
-    updateDOM();
-    };
-  }
-);
-  
-newGameBtn.addEventListener('click', function() {
-  updateDMforNewGame();
-  updateDOMforNewGame();
-  }
-);
-  
-// DOM MANIPULATION - BUNDLE FUNCTIONS //
-  
-function updateDM() {
-  currentGame.addChoice();
-  currentGame.updateAvailableSquaresArray();
-  currentGame.checkWinOrDraw();
-};
-  
-function updateDOM() {
-  updateTargetSquare();
-  if (currentGame.isOver) { 
-    disableBoardSqaures();
-    updateWinHeader();
-    setTimeout(setUpNewGame, 4000);
-  } else {
-    currentGame.trackTurn();
-    updateTurnHeader();
+
+function pageNagivation() {
+  clearInput();
+  if (!secondPlayer) {
+    nameForm.classList = "second-name-form js-name-form";
+    playBtn.classList = "second-play-btn js-play-btn";
+    body.background = "./assets/flowers.jpg";
+  } else if (firstPlayer && secondPlayer) {
+    updateDMforFirstGame();
+    updateDOMforFirstGame();
   };
 };
-  
-function setUpNewGame() {
-  updateDMforNewGame();
-  updateDOMforNewGame();
-};
-  
-function updateDMforNewGame() {
-  currentGame.initiateNewGame();
-  currentGame.establishXandOPlayers();
-};
-  
-function updateDOMforNewGame() {
-  activateSquares();
-  resetDOM();
-  updateTurnHeader();
-  updateWinCounter();
-};
-  
-function updateDMforFirstGame() {
-  currentGame = new Game(firstPlayer, secondPlayer);
-  currentGame.establishXandOPlayers();
-  body.background = "./assets/sun.jpg"
-};
-  
+
 function updateDOMforFirstGame() {
   hide(nameForm);
+  show(clearBtn)
   show(gameBoard);
   show(newGameBtn);
   show(playerBoxes[0]);
@@ -98,31 +65,113 @@ function updateDOMforFirstGame() {
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
   updateTurnHeader();
 };
-  
-function pageNagivation() {
-  clearInput();
-  if (!secondPlayer) {
-    nameForm.classList = "second-name-form js-name-form"
-    playBtn.classList = "second-play-btn js-play-btn"
-    body.background = "./assets/flowers.jpg"
-  } else if (firstPlayer && secondPlayer) {
-    updateDMforFirstGame();
-    updateDOMforFirstGame();
+
+function updateDMforFirstGame() {
+  currentGame.currentPlayer
+  currentGame = new Game(firstPlayer, secondPlayer);
+  currentGame.establishXandOPlayers();
+  body.background = "./assets/sun.jpg";
+};
+
+gameBoard.addEventListener('click', function() {
+  if (event.target.id) {
+    updateDM();
+    updateDOM();
+    };
+  }
+);
+
+newGameBtn.addEventListener('click', function() {
+  updateDMforNewGame();
+  updateDOMforNewGame();
+  }
+);
+
+// DOM MANIPULATION - BUNDLE FUNCTIONS //
+
+function updateDM() {
+  currentGame.addChoice();
+  currentGame.updateAvailableSquaresArray();
+  currentGame.checkWinOrDraw();
+};
+
+function updateDOM() {
+  updateTargetSquare();
+  if (currentGame.isOver) {
+    disableBoardSqaures();
+    updateWinHeader();
+    setTimeout(setUpNewGame, 4000);
+  } else {
+    currentGame.trackTurn();
+    updateTurnHeader();
   };
 };
 
-  // DOM MANIPULATION - ATOMIC FUNCTIONS //
+function setUpNewGame() {
+  updateDMforNewGame();
+  updateDOMforNewGame();
+};
+
+function updateDMforNewGame() {
+  currentGame.updatePlayersInStorage();
+  currentGame.initiateNewGame();
+  currentGame.checkXandOPlayers();
+};
+
+function updateDOMforNewGame() {
+  activateSquares();
+  resetDOM();
+  updateTurnHeader();
+  updateWinCounter();
+};
+
+
+// DOM MANIPULATION - ATOMIC FUNCTIONS //
+
+function checkStorageForPlayer(userInput) {
+  var newPlayer = {};
+  for (var i = 0; i < localStorage.length; i++) {
+    if (localStorage.key([i]) === `${userInput}`) {
+      newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
+      setFirstOrSecond(newPlayer);
+      return true;
+    }
+  }
+  makeNewPlayer(userInput);
+}
+
+function makeGenericPlayer() {
+  if (!firstPlayer) {
+    firstPlayer = new Player("Player 1");
+  } else {
+    secondPlayer = new Player("Player 2");
+  };
+};
+
+function makeNewPlayer(userInput) {
+  newPlayer = new Player(`${userInput}`);
+  localStorage.setItem(`${userInput}`, JSON.stringify(newPlayer));
+  setFirstOrSecond(newPlayer);
+};
+
+function setFirstOrSecond(newPlayer) {
+  if (newPlayer && !firstPlayer) {
+    firstPlayer = newPlayer;
+  } else if (newPlayer) {
+    secondPlayer = newPlayer;
+  } 
+};
 
 function clearInput(){
   nameInput.value = "";
 };
-  
+
 function updateTargetSquare() {
   event.target.disabled = true;
   event.target.classList.add(currentGame.currentPlayer.letter);
   event.target.innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
 };
-  
+
 function disableBoardSqaures() {
   for (var i = 0; i < boardSquares.length; i++) {
     boardSquares[i].disabled = true;
@@ -149,9 +198,9 @@ function activateSquares () {
   
 function updateNameFormDOM(){
   if (nameInput.value) {
-    playBtn.innerText = "Let's Play!"
+    playBtn.innerText = "Let's Play!";
   } else {
-    playBtn.innerText = "Continue as Guest"
+    playBtn.innerText = "Continue as Guest";
   };
 };
   
@@ -177,14 +226,5 @@ function show(element){
   element.classList.remove('hidden');
 };
 
-function storeNameInput() {
-  if (nameInput.value && !firstPlayer) {
-    firstPlayer = new Player ( `${nameInput.value}`, "X", "./assets/X_icon.jpg");
-  } else if (nameInput.value && !secondPlayer) {
-    secondPlayer = new Player ( `${nameInput.value}`, "O", "./assets/O_icon.jpg");
-  } else if (!nameInput.value && !firstPlayer) {
-    firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
-  } else if (!nameInput.value && !secondPlayer) {
-    secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
-  };
-};
+
+

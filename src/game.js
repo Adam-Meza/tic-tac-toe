@@ -8,6 +8,7 @@ class Game {
     this.turn = 1;
     this.isOver = false;
     this.isDraw = false;
+    this.winner = null
     this.availableSquares = ["ADG", "BD", "CDH", "AE", "BEGH", "CE", "AFH", "BF", "CFG",];
     this.choosenSquares = {
         A: {X:[], O:[]},
@@ -49,10 +50,11 @@ class Game {
       if (winConArray.length === 3) {
         this.isOver = true;
         this.currentPlayer.increaseWins();
-      } else {
-        this.checkForDraw();
-      };
+        this.winner = this.currentPlayer;
+        return
+      } 
     };
+    this.checkForDraw();
   };
 
   updateAvailableSquaresArray() {
@@ -63,7 +65,7 @@ class Game {
     };
   };
 
-  establishXandOPlayers() {
+  checkXandOPlayers() {
     if (this.firstPlayer.letter === "X") {
       this.xPlayer = this.firstPlayer;
       this.oPlayer = this.secondPlayer;
@@ -73,10 +75,29 @@ class Game {
     };
   };
 
+  establishXandOPlayers() {
+    this.xPlayer = this.firstPlayer;
+    this.oPlayer = this.secondPlayer;
+    this.firstPlayer.letter = "X";
+    this.secondPlayer.letter = "O";
+    this.firstPlayer.token = "./assets/X_icon.jpg";
+    this.secondPlayer.token = "./assets/O_icon.jpg";
+  };
+
   checkForDraw() {
-    if (this.availableSquares.length === 0){
-      this.isOver = true
-      this.isDraw = true
+    if (this.availableSquares.length === 0) {
+      this.isOver = true;
+      this.isDraw = true;
+    };
+  };
+
+  updatePlayersInStorage() {
+    if(this.winner) {
+      for (var i = 0; i < localStorage.length; i++) {
+        if (localStorage.key([i]) === this.winner.name) {
+          localStorage.setItem(`${this.winner.name}`, JSON.stringify(this.winner));
+        };
+      };
     };
   };
 
