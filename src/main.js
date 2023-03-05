@@ -26,14 +26,56 @@ nameInput.addEventListener('input', function(){
 
 playBtn.addEventListener('click', function(event) {
   event.preventDefault();
-  if (!firstPlayer) {
-    makeFirstPlayer();
-  } else if (!secondPlayer) {
-    makeSecondPlayer()
-  }
+    if (!nameInput.value) {
+      makeGenericPlayer()
+    } else {
+      checkStorageForPlayer();
+    }
   pageNagivation();
   }
 );
+
+function checkStorageForPlayer() {
+  var newPlayer = {};
+  console.log("before loop", newPlayer)
+  for (var i = 0; i < localStorage.length; i++) {
+    if (localStorage.key([i]) === `${nameInput.value}`) {
+      newPlayer = JSON.parse(localStorage.getItem(`${nameInput.value}`));
+      console.log(localStorage)
+      console.log(localStorage.getItem(`${nameInput.value}`))
+      console.log(newPlayer)
+      // newPlayer = JSON.parse(newPlayer);
+      setFirstOrSecond(newPlayer)
+      return true
+    }
+  }
+  makeNewPlayer()
+}
+
+function makeNewPlayer() {
+    newPlayer = new Player(`${nameInput.value}`, "X", "./assets/X_icon.jpg");
+    localStorage.setItem(`${nameInput.value}`, JSON.stringify(newPlayer));
+    setFirstOrSecond(newPlayer);
+};
+
+
+function makeGenericPlayer() {
+  if (!firstPlayer) {
+    firstPlayer = new Player("Player 1", "X", "./assets/X_icon.jpg");
+  } else {
+    secondPlayer = new Player("Player 2", "O", "./assets/O_icon.jpg");
+  };
+};
+
+function setFirstOrSecond(newPlayer) {
+  if (newPlayer && !firstPlayer) {
+    firstPlayer = newPlayer
+  } else if (newPlayer) {
+    secondPlayer = newPlayer
+  } else {}
+};
+
+
   
 gameBoard.addEventListener('click', function() {
   if (event.target.id) {
@@ -76,7 +118,7 @@ function setUpNewGame() {
   
 function updateDMforNewGame() {
   currentGame.initiateNewGame();
-  currentGame.establishXandOPlayers();
+  currentGame.checkXandOPlayers()
 };
   
 function updateDOMforNewGame() {
@@ -181,22 +223,5 @@ function show(element){
   element.classList.remove('hidden');
 };
 
-function makeFirstPlayer() {
-  /// maybe new funciton that checks if there;s already a player with this name
-  // if so it sets player one to taht obj instance
-  if (nameInput.value) {
-      /// maybe new funciton that checks if there;s already a player with this name
-  // if so it sets player one to taht obj instance
-    firstPlayer = new Player ( `${nameInput.value}`, "X", "./assets/X_icon.jpg");
-  } else {
-    firstPlayer = new Player ("Player 1", "X", "./assets/X_icon.jpg");
-};
-}
 
-function makeSecondPlayer() {
-if (nameInput.value) {
-  secondPlayer = new Player ( `${nameInput.value}`, "O", "./assets/O_icon.jpg");
-} else if (!nameInput.value) {
-  secondPlayer =  new Player ("Player 2", "O", "./assets/O_icon.jpg");
-  };
-};
+

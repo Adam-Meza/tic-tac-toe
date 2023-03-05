@@ -63,7 +63,7 @@ class Game {
     };
   };
 
-  establishXandOPlayers() {
+  checkXandOPlayers() {
     if (this.firstPlayer.letter === "X") {
       this.xPlayer = this.firstPlayer;
       this.oPlayer = this.secondPlayer;
@@ -71,6 +71,15 @@ class Game {
       this.xPlayer = this.secondPlayer;
       this.oPlayer = this.firstPlayer;
     };
+  };
+
+  establishXandOPlayers() {
+    this.xPlayer = this.firstPlayer;
+    this.oPlayer = this.secondPlayer;
+    this.firstPlayer.letter = "X"
+    this.secondPlayer.letter = "O"
+    this.firstPlayer.token = "./assets/X_icon.jpg"
+    this.secondPlayer.token - "./assets/O_icon.jpg"
   };
 
   checkForDraw() {
