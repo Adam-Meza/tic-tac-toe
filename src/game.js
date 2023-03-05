@@ -49,8 +49,8 @@ class Game {
       winConArray = this.choosenSquares[String.fromCharCode(i)][this.currentPlayer.letter];
       if (winConArray.length === 3) {
         this.isOver = true;
-        this.currentPlayer.increaseWins();
         this.winner = this.currentPlayer;
+        this.currentPlayer.increaseWins();
         return
       } 
     };
@@ -92,7 +92,7 @@ class Game {
   };
 
   updatePlayersInStorage() {
-    if(this.winner) {
+    if (this.winner) {
       for (var i = 0; i < localStorage.length; i++) {
         if (localStorage.key([i]) === this.winner.name) {
           localStorage.setItem(`${this.winner.name}`, JSON.stringify(this.winner));

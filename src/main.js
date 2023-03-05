@@ -18,10 +18,10 @@ var playBtn = document.querySelector('.js-play-btn');
 var body = document.querySelector('.body');
 
 
-var clearBtn = document.querySelector('.js-clear-btn')
-clearBtn.addEventListener('click', function(){
-  localStorage.clear()
-})
+// var clearBtn = document.querySelector('.js-clear-btn')
+// clearBtn.addEventListener('click', function(){
+//   localStorage.clear()
+// })
 
 // EVENT LISTENERS // 
 
@@ -37,7 +37,7 @@ playBtn.addEventListener('click', function(event) {
     } else {
       var userInput = nameInput.value.toLowerCase()
       checkStorageForPlayer(userInput);
-    }
+    };
     pageNagivation();
   }
 );
@@ -128,6 +128,14 @@ function updateDOMforNewGame() {
 
 // DOM MANIPULATION - ATOMIC FUNCTIONS //
 
+function updateNameFormDOM(){
+  if (nameInput.value) {
+    playBtn.innerText = "Let's Play!";
+  } else {
+    playBtn.innerText = "Continue as Guest";
+  };
+};
+
 function checkStorageForPlayer(userInput) {
   var newPlayer = {};
   for (var i = 0; i < localStorage.length; i++) {
@@ -135,10 +143,10 @@ function checkStorageForPlayer(userInput) {
       newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
       setFirstOrSecond(newPlayer);
       return true;
-    }
-  }
+    };
+  };
   makeNewPlayer(userInput);
-}
+};
 
 function makeGenericPlayer() {
   if (!firstPlayer) {
@@ -195,15 +203,7 @@ function activateSquares () {
     boardSquares[i].disabled = false;
   };
 };
-  
-function updateNameFormDOM(){
-  if (nameInput.value) {
-    playBtn.innerText = "Let's Play!";
-  } else {
-    playBtn.innerText = "Continue as Guest";
-  };
-};
-  
+
 function resetDOM() {
   for (var i = 0; i < boardSquares.length; i++) {
     boardSquares[i].disabled = false;
