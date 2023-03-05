@@ -17,7 +17,6 @@ var newGameBtn = document.querySelector('.js-new-game-button');
 var playBtn = document.querySelector('.js-play-btn');
 var body = document.querySelector('.body');
 
-
 // var clearBtn = document.querySelector('.js-clear-btn')
 // clearBtn.addEventListener('click', function(){
 //   localStorage.clear()
@@ -38,40 +37,10 @@ playBtn.addEventListener('click', function(event) {
       var userInput = nameInput.value.toLowerCase()
       checkStorageForPlayer(userInput);
     };
+    clearInput();
     pageNagivation();
   }
 );
-
-function pageNagivation() {
-  clearInput();
-  if (!secondPlayer) {
-    nameForm.classList = "second-name-form js-name-form";
-    playBtn.classList = "second-play-btn js-play-btn";
-    body.background = "./assets/flowers.jpg";
-  } else if (firstPlayer && secondPlayer) {
-    updateDMforFirstGame();
-    updateDOMforFirstGame();
-  };
-};
-
-function updateDOMforFirstGame() {
-  hide(nameForm);
-  show(clearBtn)
-  show(gameBoard);
-  show(newGameBtn);
-  show(playerBoxes[0]);
-  show(playerBoxes[1]);
-  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
-  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
-  updateTurnHeader();
-};
-
-function updateDMforFirstGame() {
-  currentGame.currentPlayer
-  currentGame = new Game(firstPlayer, secondPlayer);
-  currentGame.establishXandOPlayers();
-  body.background = "./assets/sun.jpg";
-};
 
 gameBoard.addEventListener('click', function() {
   if (event.target.id) {
@@ -88,6 +57,40 @@ newGameBtn.addEventListener('click', function() {
 );
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
+
+
+function pageNagivation() {
+  if (!firstPlayer) {
+    //
+    //body.background = "./assets/pond.jpg"
+  } else if (!secondPlayer) {
+    nameForm.classList = "second-name-form js-name-form";
+    playBtn.classList = "second-play-btn js-play-btn";
+    body.background = "./assets/flowers.jpg";
+  } else if (firstPlayer && secondPlayer) {
+    updateDMforFirstGame();
+    updateDOMforFirstGame();
+  };
+};
+
+function updateDOMforFirstGame() {
+  hide(nameForm);
+  // show(clearBtn)
+  show(gameBoard);
+  show(newGameBtn);
+  show(playerBoxes[0]);
+  show(playerBoxes[1]);
+  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
+  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  updateTurnHeader();
+};
+
+function updateDMforFirstGame() {
+  currentGame.currentPlayer
+  currentGame = new Game(firstPlayer, secondPlayer);
+  currentGame.establishXandOPlayers();
+  body.background = "./assets/sun.jpg";
+};
 
 function updateDM() {
   currentGame.addChoice();
@@ -124,7 +127,6 @@ function updateDOMforNewGame() {
   updateTurnHeader();
   updateWinCounter();
 };
-
 
 // DOM MANIPULATION - ATOMIC FUNCTIONS //
 
