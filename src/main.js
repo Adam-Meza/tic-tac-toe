@@ -1,22 +1,26 @@
 // GLOBAL DATA MODEL //
-var currentGame = {};
-var firstPlayer = null;
-var secondPlayer = null;
+var currentGame = {},
+ firstPlayer = null,
+ secondPlayer = null,
+ numOfPlayers = 0;
 
 // QUERY SELECTORS //
-var gameBoard = document.querySelector('.js-game-board');
-var boardSquares = document.querySelectorAll('.js-board-square');
-var playerBoxes = document.querySelectorAll('.js-player-box')
-var winBoxHeaders = document.querySelectorAll('.js-win-box');
-var turnHeader = document.querySelector('.js-turn-header');
-var winCounts = document.querySelectorAll('.js-win-count');
-var nameInput = document.querySelector('.js-name-input');
-var nameForm = document.querySelector('.js-name-form');
-var playerNameTitles = document.querySelectorAll('.js-player-name');
-var newGameBtn = document.querySelector('.js-new-game-button');
-var playBtn = document.querySelector('.js-play-btn');
-var body = document.querySelector('.body');
-
+var gameBoard = document.querySelector('.js-game-board'),
+ boardSquares = document.querySelectorAll('.js-board-square'),
+ playerBoxes = document.querySelectorAll('.js-player-box'),
+ winBoxHeaders = document.querySelectorAll('.js-win-box'),
+ turnHeader = document.querySelector('.js-turn-header'),
+ winCounts = document.querySelectorAll('.js-win-count'),
+ nameInput = document.querySelector('.js-name-input'),
+ userInputForm = document.querySelector('.js-user-input-form'),
+ playerNameTitles = document.querySelectorAll('.js-player-name'),
+ newGameBtn = document.querySelector('.js-new-game-button'),
+ playBtn = document.querySelector('.js-play-btn'),
+ body = document.querySelector('.body'),
+ numPlayersBtnBox = document.querySelector('.js-num-players-btn-box'),
+ onePlayerBtn = document.querySelector('.js-one-player-btn'),
+ twoPlayerBtn = document.querySelector('.js-one-player-btn'),
+ userPrompt = document.querySelector('.js-user-prompt');
 
 // var clearBtn = document.querySelector('.js-clear-btn')
 // clearBtn.addEventListener('click', function(){
@@ -24,6 +28,12 @@ var body = document.querySelector('.body');
 // })
 
 // EVENT LISTENERS // 
+
+numPlayersBtnBox.addEventListener('click', function() {
+  event.preventDefault();
+  numOfPlayers = event.target.id
+  pageNagivation();
+});
 
 nameInput.addEventListener('input', function(){
   updateNameFormDOM();
@@ -35,47 +45,18 @@ playBtn.addEventListener('click', function(event) {
     if (!nameInput.value) {
       makeGenericPlayer();
     } else {
-      var userInput = nameInput.value.toLowerCase()
+      var userInput = nameInput.value.toLowerCase();
       checkStorageForPlayer(userInput);
     };
+    clearInput();
     pageNagivation();
   }
 );
 
-function pageNagivation() {
-  clearInput();
-  if (!secondPlayer) {
-    nameForm.classList = "second-name-form js-name-form";
-    playBtn.classList = "second-play-btn js-play-btn";
-    body.background = "./assets/flowers.jpg";
-  } else if (firstPlayer && secondPlayer) {
-    updateDMforFirstGame();
-    updateDOMforFirstGame();
-  };
-};
-
-function updateDOMforFirstGame() {
-  hide(nameForm);
-  show(clearBtn)
-  show(gameBoard);
-  show(newGameBtn);
-  show(playerBoxes[0]);
-  show(playerBoxes[1]);
-  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
-  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
-  updateTurnHeader();
-};
-
-function updateDMforFirstGame() {
-  currentGame.currentPlayer
-  currentGame = new Game(firstPlayer, secondPlayer);
-  currentGame.establishXandOPlayers();
-  body.background = "./assets/sun.jpg";
-};
-
 gameBoard.addEventListener('click', function() {
   if (event.target.id) {
     updateDM();
+    updateTargetSquare();
     updateDOM();
     };
   }
@@ -89,20 +70,68 @@ newGameBtn.addEventListener('click', function() {
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
 
+function pageNagivation() {
+  if (!firstPlayer) {
+    navigateToFirstNameForm()
+  } else if (!secondPlayer && numOfPlayers === "2") {
+      console.log("80")
+      navigateToSecondNameForm()
+  } else if (!secondPlayer && numOfPlayers === "1") {
+      currentGame = new OnePlayerGame(firstPlayer)
+      currentGame.establishXandOPlayers()
+      updateDOMforFirstGame()
+  } else if (firstPlayer && secondPlayer) {
+    updateDMforFirstGame();
+    updateDOMforFirstGame();
+  };
+};
+
+function navigateToFirstNameForm() {
+  userPrompt.innerText = "What's Your Name?"
+  userInputForm.classList = "name-form js-user-input-form"
+  show(nameInput)
+  show(playBtn)
+  hide(numPlayersBtnBox)
+  body.background = "./assets/wheat.jpg"
+}
+
+function navigateToSecondNameForm() {
+  userInputForm.classList = "second-name-form js-user-input-form";
+  playBtn.classList = "second-play-btn js-play-btn";
+  body.background = "./assets/flowers.jpg";
+}
+
+function updateDOMforFirstGame() {
+  hide(userInputForm);
+  // show(clearBtn)
+  show(gameBoard);
+  show(newGameBtn);
+  show(playerBoxes[0]);
+  show(playerBoxes[1]);
+  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
+  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  body.background = "./assets/sun.jpg";
+  updateTurnHeader();
+};
+
+function updateDMforFirstGame() {
+  currentGame = new Game(firstPlayer, secondPlayer);
+  currentGame.establishXandOPlayers();
+};
+
 function updateDM() {
-  currentGame.addChoice();
-  currentGame.updateAvailableSquaresArray();
+  currentGame.addChoice(event.target.id);
+  currentGame.updateAvailableSquaresArray(event.target.id);
   currentGame.checkWinOrDraw();
 };
 
 function updateDOM() {
-  updateTargetSquare();
   if (currentGame.isOver) {
     disableBoardSqaures();
     updateWinHeader();
     setTimeout(setUpNewGame, 4000);
   } else {
-    currentGame.trackTurn();
+    currentGame.passTurn();
     updateTurnHeader();
   };
 };
@@ -110,6 +139,9 @@ function updateDOM() {
 function setUpNewGame() {
   updateDMforNewGame();
   updateDOMforNewGame();
+  if (numOfPlayers === "1") {
+    currentGame.checkIfCompTurn()
+  }
 };
 
 function updateDMforNewGame() {
@@ -124,7 +156,6 @@ function updateDOMforNewGame() {
   updateTurnHeader();
   updateWinCounter();
 };
-
 
 // DOM MANIPULATION - ATOMIC FUNCTIONS //
 
