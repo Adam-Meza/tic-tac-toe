@@ -1,18 +1,6 @@
 class OnePlayerGame extends Game {
   constructor(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares){
-    super(
-      firstPlayer,
-      secondPlayer,
-      currentPlayer,
-      oPlayer,
-      xPlayer,
-      turn,
-      isOver,
-      isDraw,
-      winner,
-      choosenSquares,
-      availableSquares
-      )
+    super(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares)
       this.secondPlayer = secondPlayer || new Player("Player 2")
       this.winCons = {
         A:["ADG", "AE", "AFH"],
