@@ -26,7 +26,7 @@ class Game {
     currentGame = new Game(this.secondPlayer, this.firstPlayer);
   };
 
-  trackTurn() {
+  passTurn() {
     this.turn += 1;
     if (this.turn % 2 === 0) {
       this.currentPlayer = this.secondPlayer;
@@ -35,11 +35,10 @@ class Game {
     };
   };
 
-  addChoice() {
+  addChoice(choosenSquareId) {
     var playerLetter = this.currentPlayer.letter;
-    var squareId = event.target.id;
-    for (var i = 0; i < squareId.length; i++) {
-      this.choosenSquares[squareId.charAt(i)][playerLetter].push(playerLetter);
+    for (var i = 0; i < choosenSquareId.length; i++) {
+      this.choosenSquares[choosenSquareId.charAt(i)][playerLetter].push(playerLetter);
     };
   };
 
@@ -57,9 +56,9 @@ class Game {
     this.checkForDraw();
   };
 
-  updateAvailableSquaresArray() {
+  updateAvailableSquaresArray(choosenSquareId) {
     for (var i = 0; i < this.availableSquares.length; i++) {
-      if (event.target.id === this.availableSquares[i]) {
+      if (choosenSquareId === this.availableSquares[i]) {
         this.availableSquares.splice(i,1);
       };
     };

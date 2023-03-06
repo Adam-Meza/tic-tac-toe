@@ -19,10 +19,14 @@
     <section class="main-container">
       <h1 class="turn-header js-turn-header">Welcome! Let's Play Tic-Tac-Toe!
       </h1>
-      <form class="name-form js-name-form">
-        <h1 class="name-prompt name-prompt">What's Your Name?</h1>
-        <input type="text" class="name-input js-name-input">
-        <button class="play-btn js-play-btn">Continue as Guest</button>
+      <form class="num-form js-user-input-form">
+        <h1 class="user-prompt js-user-prompt">How Many Players?</h1>
+        <input type="text" class="name-input js-name-input hidden">
+        <div class="num-players-btn-box js-num-players-btn-box">
+          <button class="num-players-btn js-one-player-btn" id="1">1</button>
+          <button class="num-players-btn js-two-players-btn" id="2">2</button>
+        </div>
+        <button class="play-btn js-play-btn hidden">Continue as Guest</button>
       </form>
       <section class="game-board js-game-board hidden">
         <button class="board-square js-board-square" id="ADG" ></button>
@@ -48,5 +52,6 @@
   </body>
   <script type="text/javascript" src="./src/player.js"></script>
   <script type="text/javascript" src="./src/game.js"></script>
+  <script type="text/javascript" src="./src/one-player-game.js"></script>
   <script type="text/javascript" src="./src/main.js"></script>
 </html>

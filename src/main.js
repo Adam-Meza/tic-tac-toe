@@ -2,6 +2,7 @@
 var currentGame = {};
 var firstPlayer = null;
 var secondPlayer = null;
+var numOfPlayers = 0;
 
 // QUERY SELECTORS //
 var gameBoard = document.querySelector('.js-game-board');
@@ -11,11 +12,15 @@ var winBoxHeaders = document.querySelectorAll('.js-win-box');
 var turnHeader = document.querySelector('.js-turn-header');
 var winCounts = document.querySelectorAll('.js-win-count');
 var nameInput = document.querySelector('.js-name-input');
-var nameForm = document.querySelector('.js-name-form');
+var userInputForm = document.querySelector('.js-user-input-form');
 var playerNameTitles = document.querySelectorAll('.js-player-name');
 var newGameBtn = document.querySelector('.js-new-game-button');
 var playBtn = document.querySelector('.js-play-btn');
 var body = document.querySelector('.body');
+var numPlayersBtnBox = document.querySelector('.js-num-players-btn-box');
+var onePlayerBtn = document.querySelector('.js-one-player-btn');
+var twoPlayerBtn = document.querySelector('.js-one-player-btn');
+var userPrompt = document.querySelector('.js-user-prompt')
 
 // var clearBtn = document.querySelector('.js-clear-btn')
 // clearBtn.addEventListener('click', function(){
@@ -23,6 +28,12 @@ var body = document.querySelector('.body');
 // })
 
 // EVENT LISTENERS // 
+
+numPlayersBtnBox.addEventListener('click', function() {
+  event.preventDefault();
+  numOfPlayers = event.target.id
+  pageNagivation();
+});
 
 nameInput.addEventListener('input', function(){
   updateNameFormDOM();
@@ -34,7 +45,7 @@ playBtn.addEventListener('click', function(event) {
     if (!nameInput.value) {
       makeGenericPlayer();
     } else {
-      var userInput = nameInput.value.toLowerCase()
+      var userInput = nameInput.value.toLowerCase();
       checkStorageForPlayer(userInput);
     };
     clearInput();
@@ -58,23 +69,40 @@ newGameBtn.addEventListener('click', function() {
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
 
-
 function pageNagivation() {
   if (!firstPlayer) {
-    //
-    //body.background = "./assets/pond.jpg"
-  } else if (!secondPlayer) {
-    nameForm.classList = "second-name-form js-name-form";
-    playBtn.classList = "second-play-btn js-play-btn";
-    body.background = "./assets/flowers.jpg";
+    navigateToFirstNameForm()
+  } else if (!secondPlayer && numOfPlayers === "2") {
+      console.log("80")
+      navigateToSecondNameForm()
+  } else if (!secondPlayer && numOfPlayers === "1") {
+      console.log("83")
+      currentGame = new OnePlayerGame(firstPlayer)
+      currentGame.establishXandOPlayers()
+      updateDOMforFirstGame()
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
   };
 };
 
+function navigateToFirstNameForm() {
+  userPrompt.innerText = "What's Your Name?"
+  userInputForm.classList = "name-form js-user-input-form"
+  show(nameInput)
+  show(playBtn)
+  hide(numPlayersBtnBox)
+  body.background = "./assets/wheat.jpg"
+}
+
+function navigateToSecondNameForm() {
+  userInputForm.classList = "second-name-form js-user-input-form";
+  playBtn.classList = "second-play-btn js-play-btn";
+  body.background = "./assets/flowers.jpg";
+}
+
 function updateDOMforFirstGame() {
-  hide(nameForm);
+  hide(userInputForm);
   // show(clearBtn)
   show(gameBoard);
   show(newGameBtn);
@@ -82,19 +110,18 @@ function updateDOMforFirstGame() {
   show(playerBoxes[1]);
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  body.background = "./assets/sun.jpg";
   updateTurnHeader();
 };
 
 function updateDMforFirstGame() {
-  currentGame.currentPlayer
   currentGame = new Game(firstPlayer, secondPlayer);
   currentGame.establishXandOPlayers();
-  body.background = "./assets/sun.jpg";
 };
 
 function updateDM() {
-  currentGame.addChoice();
-  currentGame.updateAvailableSquaresArray();
+  currentGame.addChoice(event.target.id);
+  currentGame.updateAvailableSquaresArray(event.target.id);
   currentGame.checkWinOrDraw();
 };
 
@@ -105,7 +132,7 @@ function updateDOM() {
     updateWinHeader();
     setTimeout(setUpNewGame, 4000);
   } else {
-    currentGame.trackTurn();
+    currentGame.passTurn();
     updateTurnHeader();
   };
 };
