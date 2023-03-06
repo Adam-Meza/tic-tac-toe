@@ -23,7 +23,11 @@ class Game {
     };
 
   initiateNewGame() {
+    if (numOfPlayers === "2") {
     currentGame = new Game(this.secondPlayer, this.firstPlayer);
+    } else if (numOfPlayers === "1") {
+      currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer)
+    }
   };
 
   passTurn() {

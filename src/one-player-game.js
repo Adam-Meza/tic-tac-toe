@@ -1,19 +1,8 @@
-// this will be a new class of game
-// it will have a preselected secodn player - an instance ofthe CompPlayer class
-// which will take its turn
-// after a timer
-// it will disable and add its icon to a square baseed off a rnadom selection
-// game will
-
-// add Compchoice
-
-// avilable squares might be differnt
-
-
 class OnePlayerGame extends Game {
   constructor(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares){
     super(
-      firstPlayer, 
+      firstPlayer,
+      secondPlayer,
       currentPlayer,
       oPlayer,
       xPlayer,
@@ -24,7 +13,7 @@ class OnePlayerGame extends Game {
       choosenSquares,
       availableSquares
       )
-      this.secondPlayer = new Player("Player 2")
+      this.secondPlayer = secondPlayer || new Player("Player 2")
       this.winCons = {
         A:["ADG", "AE", "AFH"],
         B:["BD", "BEGH", "BF"],
@@ -35,115 +24,119 @@ class OnePlayerGame extends Game {
         G:["ADG", "BEGH", "CFG"],
         H:["CDH", "BEGH", "BF"]
       }
-
     }
 
   initiateNewGame(){
-    super.initiateNewGame()
+    super.initiateNewGame();
   }
 
-  addChoice(choosenSquareId){
-    super.addChoice(choosenSquareId)
+  addChoice(choosenSquareId) {
+    super.addChoice(choosenSquareId);
   }
 
   passTurn() {
-    this.currentPlayer = this.secondPlayer
-    compChoice = this.getCompChoice()
-    this.compTurnDM(compChoice)
-    this.compTurnDOM(compChoice)
-    // then it runs compTurnDM() 
-    // DM willl check which squares the user has selected
-    // itll then see if any of the win cons have two
-    // if so it goes into tha availbale squares array
-    // finds that ID
-    // uses it to add its stuff to a square and remove it from the available squares
-    // and compTurnDOM()
-    // first disabled everything
-    // DM immediately DOM after a timer 
-    // then pass turn
-    // figure out timing on display
-    this.currentPlayer = this.firstPlayer
+    super.passTurn()
+    this.checkIfCompTurn()
+  };
+
+  checkIfCompTurn(){
+    // this.test()
+    if (this.currentPlayer.name === "Player 2") {
+      var compChoice = this.getCompChoice();
+      this.runCompTurn(compChoice)
+      this.currentPlayer = this.xPlayer;
+    }
   }
 
+  compTurnDM(compChoice) {
+    this.addChoice(compChoice);
+    this.updateAvailableSquaresArray(compChoice);
+    this.updateWinCons(compChoice);
+    this.checkWinOrDraw();
+  }
 
   compTurnDOM(compChoice){
-    disableBoardSqaures()
-    updateTargetSquare(compChoice)
-    if (this.isOver) {
-      updateWinHeader();
-      setTimeout(setUpNewGame, 4000);
-  } else {
-    currentGame.passTurn();
+    disableBoardSqaures();
     updateTurnHeader();
+    this.updateSquare(compChoice);
+    updateDOM()
+    this.reactiveSquares()
+    
   };
-  }
+
+  runCompTurn(compChoice){
+    this.compTurnDM(compChoice);
+    this.compTurnDOM(compChoice);
+  };
 
   updateSquare(compChoice) {
     for (var i = 0; i < boardSquares.length; i++) {
       if (boardSquares[i].id === compChoice) {
         boardSquares[i].classList.add(currentGame.currentPlayer.letter);
         boardSquares[i].innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
-      }
-    } 
-  }
-
-  compTurnDM(compChoice) {
-    this.addChoice(compChoice)
-    this.updateAvailableSquaresArray(compChoice)
-    this.checkWinOrDraw()
-  }
-
-  getCompChoice () {
-    var compChoice = null
-    for (var i = 65; i < 73; i++) {
-      winConArray = this.choosenSquares[String.fromCharCode(i)].X;
-      if (winConArray === 2) {
-        compChoice = this.winCons[String.fromCharCode[i]][0]
-        return compChoice
-      } else {}
-    }
-    compChoice = Math.floor(Math.random() * this.choosenSqures.length)
-    return compChoice
-  }
-
-  updateWinCons(choosenSquareId){
-    var winConArray = []
-    for (var i = 65; i < 73; i++) {
-      winConArray = this.winCons[String.fromCharCode(i)]
-      for (var j= 0; i < winConArray.length; j++) {
-         if (winConArray[j] === choosenSquareId) {
-          winConArray.splice(j, 1)
-        }
-      }
-    }
+      };
+    };
   };
 
-  
-  checkWinOrDraw(){
-    super.checkForDraw()
+  getCompChoice() {
+    var compChoice = null;
+    // // for (var i = 65; i < 73; i++) {
+    // //   var winConArray = this.choosenSquares[String.fromCharCode(i)].X;
+    // //   if (winConArray.length === 2) {
+    // //     compChoice = this.winCons[String.fromCharCode(i)][0];
+    // //     return compChoice;
+    // //   } 
+    // // }
+    var randomIndex = Math.floor(Math.random() * this.availableSquares.length);
+    compChoice = this.availableSquares[randomIndex]
+    return compChoice;
+  };
+
+  updateWinCons(choosenSquareId){
+    var winConArray = [];
+    for (var i = 65; i < 73; i++) {
+      winConArray = this.winCons[String.fromCharCode(i)]
+      for (var j= 0; j < winConArray.length; j++) {
+          if (winConArray[j] === choosenSquareId) {
+          winConArray.splice(j, 1);
+        };
+      };
+    };
+  };
+
+  reactiveSquares(){
+    var squareElem = ""
+    for (var i = 0; i < this.availableSquares.length; i++) {
+      squareElem = this.availableSquares[i]
+      for (var j = 0; j < boardSquares.length; j++) {
+        if (squareElem === boardSquares[j].id) {
+          boardSquares[j].disabled = false
+        };
+      };
+    };
+  };
+
+  checkWinOrDraw() {
+    super.checkWinOrDraw();
   }
 
   updateAvailableSquaresArray(choosenSquareId){
-    super.updateAvailableSquaresArray(choosenSquareId)
-    this.updateWinCons(choosenSquareId)
+    super.updateAvailableSquaresArray(choosenSquareId);
   }
 
   checkXandOPlayers(){
-    super.checkXandOPlayers()
+    super.checkXandOPlayers();
   }
   establishXandOPlayers(){
-    super.establishXandOPlayers()
+    super.establishXandOPlayers();
   }
 
   checkForDraw(){
-    super.checkForDraw()
+    super.checkForDraw();
   }
 
   updatePlayersInStorage(){
-    super.updatePlayersInStorage()
+    super.updatePlayersInStorage();
   }
-
-
-
 
 }

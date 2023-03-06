@@ -1,26 +1,26 @@
 // GLOBAL DATA MODEL //
-var currentGame = {};
-var firstPlayer = null;
-var secondPlayer = null;
-var numOfPlayers = 0;
+var currentGame = {},
+ firstPlayer = null,
+ secondPlayer = null,
+ numOfPlayers = 0;
 
 // QUERY SELECTORS //
-var gameBoard = document.querySelector('.js-game-board');
-var boardSquares = document.querySelectorAll('.js-board-square');
-var playerBoxes = document.querySelectorAll('.js-player-box')
-var winBoxHeaders = document.querySelectorAll('.js-win-box');
-var turnHeader = document.querySelector('.js-turn-header');
-var winCounts = document.querySelectorAll('.js-win-count');
-var nameInput = document.querySelector('.js-name-input');
-var userInputForm = document.querySelector('.js-user-input-form');
-var playerNameTitles = document.querySelectorAll('.js-player-name');
-var newGameBtn = document.querySelector('.js-new-game-button');
-var playBtn = document.querySelector('.js-play-btn');
-var body = document.querySelector('.body');
-var numPlayersBtnBox = document.querySelector('.js-num-players-btn-box');
-var onePlayerBtn = document.querySelector('.js-one-player-btn');
-var twoPlayerBtn = document.querySelector('.js-one-player-btn');
-var userPrompt = document.querySelector('.js-user-prompt')
+var gameBoard = document.querySelector('.js-game-board'),
+ boardSquares = document.querySelectorAll('.js-board-square'),
+ playerBoxes = document.querySelectorAll('.js-player-box'),
+ winBoxHeaders = document.querySelectorAll('.js-win-box'),
+ turnHeader = document.querySelector('.js-turn-header'),
+ winCounts = document.querySelectorAll('.js-win-count'),
+ nameInput = document.querySelector('.js-name-input'),
+ userInputForm = document.querySelector('.js-user-input-form'),
+ playerNameTitles = document.querySelectorAll('.js-player-name'),
+ newGameBtn = document.querySelector('.js-new-game-button'),
+ playBtn = document.querySelector('.js-play-btn'),
+ body = document.querySelector('.body'),
+ numPlayersBtnBox = document.querySelector('.js-num-players-btn-box'),
+ onePlayerBtn = document.querySelector('.js-one-player-btn'),
+ twoPlayerBtn = document.querySelector('.js-one-player-btn'),
+ userPrompt = document.querySelector('.js-user-prompt');
 
 // var clearBtn = document.querySelector('.js-clear-btn')
 // clearBtn.addEventListener('click', function(){
@@ -56,6 +56,7 @@ playBtn.addEventListener('click', function(event) {
 gameBoard.addEventListener('click', function() {
   if (event.target.id) {
     updateDM();
+    updateTargetSquare();
     updateDOM();
     };
   }
@@ -76,7 +77,6 @@ function pageNagivation() {
       console.log("80")
       navigateToSecondNameForm()
   } else if (!secondPlayer && numOfPlayers === "1") {
-      console.log("83")
       currentGame = new OnePlayerGame(firstPlayer)
       currentGame.establishXandOPlayers()
       updateDOMforFirstGame()
@@ -126,7 +126,6 @@ function updateDM() {
 };
 
 function updateDOM() {
-  updateTargetSquare();
   if (currentGame.isOver) {
     disableBoardSqaures();
     updateWinHeader();
@@ -140,6 +139,9 @@ function updateDOM() {
 function setUpNewGame() {
   updateDMforNewGame();
   updateDOMforNewGame();
+  if (numOfPlayers === "1") {
+    currentGame.checkIfCompTurn()
+  }
 };
 
 function updateDMforNewGame() {
