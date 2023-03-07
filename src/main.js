@@ -31,6 +31,11 @@ var body = document.querySelector('.body'),
 
 // EVENT LISTENERS // 
 
+nameInput.addEventListener('input', updateNameFormDOM);
+nameInput.addEventListener('submit', enterPressPlay);
+playBtn.addEventListener('click', playBtnFunctionality);
+newGameBtn.addEventListener('click', navToNewGameForm);
+
 numPlayersBtnBox.addEventListener('click', function() {
   event.preventDefault();
   if (event.target.id){
@@ -40,35 +45,12 @@ numPlayersBtnBox.addEventListener('click', function() {
   }
 );
 
-nameInput.addEventListener('input', function(){
-  updateNameFormDOM();
-  }
-);
-
-playBtn.addEventListener('click', function(event) {
-  event.preventDefault();
-    if (!nameInput.value) {
-      makeGenericPlayer();
-    } else {
-      var userInput = nameInput.value.toLowerCase();
-      checkStorageForPlayer(userInput);
-    };
-    clearInput();
-    pageNagivation();
-  }
-);
-
 gameBoard.addEventListener('click', function() {
   if (event.target.id) {
     updateDM();
     updateTargetSquare();
     updateDOM();
     };
-  }
-);
-
-newGameBtn.addEventListener('click', function() {
-  navToNewGameForm();
   }
 );
 
@@ -88,6 +70,18 @@ function pageNagivation() {
     updateDOMforFirstGame();
   };
 };
+
+function playBtnFunctionality() {
+  event.preventDefault()
+  if (!nameInput.value) {
+    makeGenericPlayer();
+  } else {
+    var userInput = nameInput.value.toLowerCase();
+    checkStorageForPlayer(userInput);
+  };
+  clearInput();
+  pageNagivation();
+}
 
 function updateDMforFirstGame() {
   currentGame = new Game(firstPlayer, secondPlayer);
@@ -160,13 +154,15 @@ function hideOrShowInputElems() {
   nameInput.toggleAttribute("hidden");
   numPlayersBtnBox.toggleAttribute("hidden");
   playBtn.toggleAttribute("hidden");
-}
+};
 
 function navToNewGameForm() {
   currentGame = {};
   firstPlayer = null;
   secondPlayer = null;
   numOfPlayers = 0;
+  winCounts[0].innerHTML = "0"
+  winCounts[1].innerHTML = "0"
   userInputForm.classList = "num-form js-user-input-form";
   userPrompt.innerText = "How Many Players?";
   body.background = "./assets/pond.jpg";
@@ -175,7 +171,7 @@ function navToNewGameForm() {
   activateSquares();
   hideOrShowGameBoard();
   hideOrShowInputElems();
-}
+};
 
 function hideOrShowGameBoard() {
   gameBoard.toggleAttribute("hidden");
@@ -184,7 +180,7 @@ function hideOrShowGameBoard() {
   playerBoxes[1].toggleAttribute("hidden");
   userInputForm.toggleAttribute("hidden");
   nameInput.toggleAttribute("hidden")
-}
+};
 
 // DM MANIPULATION FOR FIRST GAME //
 
@@ -232,6 +228,11 @@ function updateNameFormDOM() {
   };
 };
 
+function enterPressPlay(){
+  if (event.keyCode === 13) {
+    playBtnFunctionality();
+  };
+};
 
 function clearInput(){
   nameInput.value = "";

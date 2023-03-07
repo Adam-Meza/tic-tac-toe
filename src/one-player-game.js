@@ -28,7 +28,7 @@ class OnePlayerGame extends Game {
     this.addChoice(this.compChoice);
     this.updateAvailableSquaresArray(this.compChoice);
     this.checkWinOrDraw();
-  }
+  };
   
   compTurnDOM() {
     this.updateSquare();

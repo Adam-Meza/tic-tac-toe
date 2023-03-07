@@ -26,7 +26,7 @@ class Game {
     if (numOfPlayers === "2") {
     currentGame = new Game(this.secondPlayer, this.firstPlayer);
     } else if (numOfPlayers === "1") {
-      currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer);
+      currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer)
     }
   };
 
@@ -43,6 +43,7 @@ class Game {
     var playerLetter = this.currentPlayer.letter;
     for (var i = 0; i < choosenSquareId.length; i++) {
       this.choosenSquares[choosenSquareId.charAt(i)][playerLetter].push(playerLetter);
+    console.log("It adds it to the DM")
     };
   };
 
