@@ -13,7 +13,7 @@ class OnePlayerGame extends Game {
   checkIfCompTurn() {
     if (this.currentPlayer.name === "Player 2") {
       disableBoardSqaures();
-      updateTurnHeader();
+      updateHeader();
       this.runCompTurn();
     };
   };
@@ -32,13 +32,12 @@ class OnePlayerGame extends Game {
   
   compTurnDOM() {
     this.updateSquare();
-    updateDOM();
     if (!this.isOver) {
-      this.currentPlayer = this.xPlayer;
+      this.passTurn();
       this.reactiveSquares();
     } else {
-      updateWinHeader();
-    };
+      updateDOM();
+    }
   };
         
   updateSquare() {

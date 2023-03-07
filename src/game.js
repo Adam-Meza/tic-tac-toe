@@ -24,7 +24,7 @@ class Game {
 
   initiateNewGame() {
     if (numOfPlayers === "2") {
-    currentGame = new Game(this.secondPlayer, this.firstPlayer);
+      currentGame = new Game(this.secondPlayer, this.firstPlayer);
     } else if (numOfPlayers === "1") {
       currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer)
     }
@@ -43,7 +43,6 @@ class Game {
     var playerLetter = this.currentPlayer.letter;
     for (var i = 0; i < choosenSquareId.length; i++) {
       this.choosenSquares[choosenSquareId.charAt(i)][playerLetter].push(playerLetter);
-    console.log("It adds it to the DM")
     };
   };
 
@@ -54,7 +53,7 @@ class Game {
       if (winConArray.length === 3) {
         this.isOver = true;
         this.winner = this.currentPlayer;
-        this.currentPlayer.increaseWins();
+        this.increaseWins();
         return
       } 
     };
@@ -104,5 +103,9 @@ class Game {
       };
     };
   };
+
+  increaseWins() {
+    this.currentPlayer.wins += 1
+  }
 
 };

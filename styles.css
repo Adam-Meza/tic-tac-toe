@@ -168,7 +168,7 @@ button {
 }
 
   .num-players-btn:hover, .num-players-btn:active {
-    background-color: #d47baf;
+    background-color: #c36a81;
   }
 
 .play-btn {
@@ -200,7 +200,7 @@ button {
 
 /* MISC */
 
-.turn-header,
+.header,
 .player-name{
   font-size: 64px;
   padding-top: 100px;

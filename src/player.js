@@ -7,8 +7,4 @@ class Player {
       this.id = Date.now()
   }
 
-  increaseWins() {
-    this.wins += 1
-  }
-
 }

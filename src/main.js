@@ -9,7 +9,7 @@ var body = document.querySelector('.body'),
  nameInput = document.querySelector('.js-name-input'),
  userInputForm = document.querySelector('.js-user-input-form'),
  userPrompt = document.querySelector('.js-user-prompt');
- turnHeader = document.querySelector('.js-turn-header'),
+ header = document.querySelector('.js-header'),
  
  gameBoard = document.querySelector('.js-game-board'),
  boardSquares = document.querySelectorAll('.js-board-square'),
@@ -92,11 +92,11 @@ function updateDM() {
 function updateDOM() {
   if (currentGame.isOver) {
     disableBoardSqaures();
-    updateWinHeader();
+    updateHeader();
     setTimeout(setUpNewGame, 4000);
   } else {
     currentGame.passTurn();
-    updateTurnHeader();
+    updateHeader();
   };
 };
 
@@ -117,7 +117,7 @@ function updateDMforNewGame() {
 function updateDOMforNewGame() {
   activateSquares();
   resetDOM();
-  updateTurnHeader();
+  updateHeader();
   updateWinCounter();
 };
 
@@ -140,8 +140,9 @@ function updateDOMforFirstGame() {
   body.background = "./assets/sun.jpg";
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  updateWinCounter();
   hideOrShowGameBoard();
-  updateTurnHeader();
+  updateHeader();
 };
 
 function hideOrShowInputElems() {
@@ -191,6 +192,7 @@ function checkStorageForPlayer(userInput) {
   for (var i = 0; i < localStorage.length; i++) {
     if (localStorage.key([i]) === `${userInput}`) {
       newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
+      console.log(newPlayer)
       setFirstOrSecond(newPlayer);
       return true;
     };
@@ -252,16 +254,14 @@ function disableBoardSqaures() {
   };
 };
   
-function updateWinHeader() {
+function updateHeader() {
   if (currentGame.isDraw) {
-    turnHeader.innerHTML = "It's a Draw!";
+    header.innerHTML = "It's a Draw!";
+  } else if (currentGame.isOver) {
+    header.innerHTML = `${currentGame.currentPlayer.name} wins!`;
   } else {
-    turnHeader.innerHTML = `${currentGame.currentPlayer.name} wins!`;
-  };
-};
-  
-function updateTurnHeader() {
-  turnHeader.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
+    header.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
+  }
 };
   
 function activateSquares () {
