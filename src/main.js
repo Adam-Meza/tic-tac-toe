@@ -90,11 +90,10 @@ function updateDM() {
 };
 
 function updateDOM() {
-  console.log(currentGame.isOver)
   if (currentGame.isOver) {
     disableBoardSqaures();
     updateHeader();
-    setTimeout(setUpNewGame, 4000)
+    setTimeout(setUpNewGame, 4000);
   } else {
     currentGame.passTurn();
     updateHeader();
@@ -102,7 +101,6 @@ function updateDOM() {
 };
 
 function setUpNewGame() {
-  console.log("cceck")
   updateDMforNewGame();
   updateDOMforNewGame();
   if (numOfPlayers === "1") {
@@ -260,7 +258,6 @@ function updateHeader() {
   if (currentGame.isDraw) {
     header.innerHTML = "It's a Draw!";
   } else if (currentGame.isOver) {
-    console.log("sombody won")
     header.innerHTML = `${currentGame.currentPlayer.name} wins!`;
   } else {
     header.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
