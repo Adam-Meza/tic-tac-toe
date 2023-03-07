@@ -140,6 +140,7 @@ function updateDOMforFirstGame() {
   body.background = "./assets/sun.jpg";
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  updateWinCounter();
   hideOrShowGameBoard();
   updateTurnHeader();
 };
