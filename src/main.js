@@ -24,11 +24,6 @@ var body = document.querySelector('.body'),
  newGameBtn = document.querySelector('.js-new-game-button'),
  playBtn = document.querySelector('.js-play-btn'),
 
-// var clearBtn = document.querySelector('.js-clear-btn')
-// clearBtn.addEventListener('click', function(){
-//   localStorage.clear()
-// })
-
 // EVENT LISTENERS // 
 
 nameInput.addEventListener('input', updateNameFormDOM);
@@ -143,7 +138,6 @@ function navToSecondNameForm() {
 
 function updateDOMforFirstGame() {
   body.background = "./assets/sun.jpg";
-  // show(clearBtn)
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
   hideOrShowGameBoard();
@@ -157,16 +151,8 @@ function hideOrShowInputElems() {
 };
 
 function navToNewGameForm() {
-  currentGame = {};
-  firstPlayer = null;
-  secondPlayer = null;
-  numOfPlayers = 0;
-  winCounts[0].innerHTML = "0"
-  winCounts[1].innerHTML = "0"
-  userInputForm.classList = "num-form js-user-input-form";
-  userPrompt.innerText = "How Many Players?";
-  body.background = "./assets/pond.jpg";
-  playBtn.classList = "play-btn js-play-btn";
+  resetDMforFirstGame();
+  resetDOMforFirstGame();
   resetDOM();
   activateSquares();
   hideOrShowGameBoard();
@@ -182,7 +168,23 @@ function hideOrShowGameBoard() {
   nameInput.toggleAttribute("hidden")
 };
 
-// DM MANIPULATION FOR FIRST GAME //
+// DM/DOM MANIPULATION FOR FIRST GAME //
+
+function resetDMforFirstGame(){
+  currentGame = {};
+  firstPlayer = null;
+  secondPlayer = null;
+  numOfPlayers = 0;
+};
+
+function resetDOMforFirstGame(){
+  winCounts[0].innerHTML = "0"
+  winCounts[1].innerHTML = "0"
+  userInputForm.classList = "num-form js-user-input-form";
+  userPrompt.innerText = "How Many Players?";
+  body.background = "./assets/pond.jpg";
+  playBtn.classList = "play-btn js-play-btn";
+};
 
 function checkStorageForPlayer(userInput) {
   var newPlayer = {};
