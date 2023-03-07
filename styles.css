@@ -1,23 +1,4 @@
-/* colors;
-
-background: #fdfff1
-
-greenlight #e1e9ba
-greendark #a8bd82
-
-bluelight #dceff3
-bluedark #8db4ca
-
-pinklight f5ddf1
-pinkdark e5a6c0
-
-brownlight #eee0c0
-browndark #b17822
-
-orange light
-orange dark */
-
-/* WIDERANGING RULES */
+/* WIDE RANDING RULLES */
 
 body {
   width: auto;
@@ -71,6 +52,7 @@ button,
 
 .num-form {
   background-color: #f5ddf1;
+  color:#e5a6c0
 }
 
 .game-board, 
@@ -84,11 +66,14 @@ form {
 }
 
 form {
-  background-color: #dceff3;
-  color:#8db4ca;
   margin-bottom: 100px;
   font-size: 50px;
   justify-content: center;
+}
+
+.name-form{
+  background-color: #dceff3;
+  color:#8db4ca;
 }
 
 .second-name-form {
@@ -122,6 +107,10 @@ color:#a8bd82;
     height: 80px;
   }
 
+  .board-square:hover{
+    background-color: #8db4ca
+  }
+
 /* PLAYER BOX */
 
 .player-box {
@@ -153,24 +142,16 @@ color:#a8bd82;
 button {
   cursor: pointer;
   font-family: 'Amatic SC', cursive;
-}
-
-button:active {
-transform: translateY(3px)
-}
-
-.new-game-button, 
-.play-btn, 
-.second-play-btn,
-.clear-storage-btn,
-.num-players-btn
-{
   width: 200px;
   height: 80px;
   font-size: 30px;
   padding: 5px 20px 5px 20px;
   background-color: #eee0c0;
 }
+
+  button:active {
+    transform: translateY(3px);
+  }
 
 .num-players-btn-box {
   width: 100%;
@@ -189,16 +170,16 @@ transform: translateY(3px)
   background-color: #e5a6c0;
 }
 
+  .num-players-btn:hover {
+    background-color: #d47baf;
+  }
+
 .play-btn {
   color: #dceff3;
   background-color:#8db4ca;
 }
 
-  .play-btn:hover {
-    background-color: #6095b3;
-  }
-
-  .play-btn:active {
+  .play-btn:hover, .play-btn:active {
     background-color: #6095b3;
   }
 
@@ -207,11 +188,7 @@ transform: translateY(3px)
   color: #e1e9ba;
 }
 
-  .second-play-btn:hover {
-    background-color: #88994b;
-  }
-
-  .second-play-btn:active {
+  .second-play-btn:hover, .second-play-btn:active {
     background-color: #88994b;
   }
 
@@ -219,7 +196,7 @@ transform: translateY(3px)
   background-color: #cfb082;
 }
 
-
+/* MISC */
 
 .turn-header,
 .player-name{
@@ -236,17 +213,14 @@ p {
 .O {
   background-color: #e1e9ba;
 }
-  .O:hover {
-  background-color: #e1e9ba;
-  }
 
-.X {
+.X{
   background-color: #f5ddf1;
 }
 
-  .X:hover {
-    background-color: #f5ddf1;
-  }
+:disabled {
+  pointer-events: none;
+}
 
 .hidden {
   display: none;
