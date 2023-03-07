@@ -93,7 +93,7 @@ function updateDOM() {
   if (currentGame.isOver) {
     disableBoardSqaures();
     updateWinHeader();
-    setTimeout(setUpNewGame, 4000);
+    setTimeout(setUpNewGame, 4000)
   } else {
     currentGame.passTurn();
     updateTurnHeader();
@@ -192,6 +192,7 @@ function checkStorageForPlayer(userInput) {
   for (var i = 0; i < localStorage.length; i++) {
     if (localStorage.key([i]) === `${userInput}`) {
       newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
+      console.log(newPlayer)
       setFirstOrSecond(newPlayer);
       return true;
     };

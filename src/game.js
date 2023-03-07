@@ -24,7 +24,7 @@ class Game {
 
   initiateNewGame() {
     if (numOfPlayers === "2") {
-    currentGame = new Game(this.secondPlayer, this.firstPlayer);
+      currentGame = new Game(this.secondPlayer, this.firstPlayer);
     } else if (numOfPlayers === "1") {
       currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer)
     }
@@ -53,7 +53,7 @@ class Game {
       if (winConArray.length === 3) {
         this.isOver = true;
         this.winner = this.currentPlayer;
-        this.currentPlayer.increaseWins();
+        this.increaseWins();
         return
       } 
     };
@@ -103,5 +103,9 @@ class Game {
       };
     };
   };
+
+  increaseWins() {
+    this.currentPlayer.wins += 1
+  }
 
 };
