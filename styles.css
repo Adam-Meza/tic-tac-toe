@@ -11,24 +11,12 @@ body {
 }
 
 body,
+button,
 .main-container,
 .player-box,
-.new-game-button,
-.name-input,
-.clear-storage-btn {
+.name-input {
   color: #b17822;
   font-family: 'Amatic SC', cursive;
-}
-
-.main-container,
-.player-box,
-.win-box,
-.name-form, 
-.num-form,
-.second-name-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 button,
@@ -37,10 +25,15 @@ button,
 .name-form, 
 .second-name-form,
 .name-input,
-.board-square {
+.board-square,
+.player-box,
+.main-container {
   border-radius: 30px;
   border: none;
   outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* MAIN CONTAINER */
@@ -48,11 +41,6 @@ button,
 .main-container{
   height: 800px;
   justify-content: center;
-}
-
-.num-form {
-  background-color: #f5ddf1;
-  color:#e5a6c0
 }
 
 .game-board, 
@@ -71,18 +59,24 @@ form {
   justify-content: center;
 }
 
+.num-form {
+  color:#e5a6c0;
+  background-color: #f5ddf1;
+}
+
 .name-form{
-  background-color: #dceff3;
   color:#8db4ca;
+  background-color: #dceff3;
 }
 
 .second-name-form {
-background-color: #e1e9ba;
-color:#a8bd82;
+  color:#a8bd82;
+  background-color: #e1e9ba;
 }
 
   .user-prompt{
     margin: 10px;
+    padding-top: 20px;
   }
 
   .name-input{
@@ -108,7 +102,7 @@ color:#a8bd82;
   }
 
   .board-square:hover{
-    background-color: #8db4ca
+    background-color: #8db4ca;
   }
 
 /* PLAYER BOX */
@@ -140,13 +134,16 @@ color:#a8bd82;
 /* BUTTONS */
 
 button {
-  cursor: pointer;
-  font-family: 'Amatic SC', cursive;
   width: 200px;
   height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 30px;
+  font-family: 'Amatic SC', cursive;
   padding: 5px 20px 5px 20px;
   background-color: #eee0c0;
+  cursor: pointer;
 }
 
   button:active {
@@ -170,7 +167,7 @@ button {
   background-color: #e5a6c0;
 }
 
-  .num-players-btn:hover {
+  .num-players-btn:hover, .num-players-btn:active {
     background-color: #d47baf;
   }
 
@@ -184,17 +181,22 @@ button {
   }
 
 .second-play-btn{
-  background-color:#a8bd82;
   color: #e1e9ba;
+  background-color:#a8bd82;
 }
 
   .second-play-btn:hover, .second-play-btn:active {
     background-color: #88994b;
   }
 
-.new-game-button:hover{
-  background-color: #cfb082;
+.new-game-button{
+  font-size: 40px;
+  color: #b17822;
 }
+
+  .new-game-button:hover, .new-game-button:active{
+    background-color: #cfb082;
+  }
 
 /* MISC */
 
@@ -222,6 +224,6 @@ p {
   pointer-events: none;
 }
 
-.hidden {
+[hidden] {
   display: none;
 }

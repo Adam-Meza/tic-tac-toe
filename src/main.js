@@ -33,8 +33,10 @@ var body = document.querySelector('.body'),
 
 numPlayersBtnBox.addEventListener('click', function() {
   event.preventDefault();
-  numOfPlayers = event.target.id
-  pageNagivation();
+  if (event.target.id){
+    numOfPlayers = event.target.id
+    pageNagivation();
+    };
   }
 );
 
@@ -66,7 +68,7 @@ gameBoard.addEventListener('click', function() {
 );
 
 newGameBtn.addEventListener('click', function() {
-  navToNewGame();
+  navToNewGameForm();
   }
 );
 
@@ -74,20 +76,18 @@ newGameBtn.addEventListener('click', function() {
 
 function pageNagivation() {
   if (!firstPlayer) {
-    navToFirstNameForm()
+    navToFirstNameForm();
   } else if (!secondPlayer && numOfPlayers === "2") {
-      console.log("80")
-      navToSecondNameForm()
+      navToSecondNameForm();
   } else if (!secondPlayer && numOfPlayers === "1") {
-      currentGame = new OnePlayerGame(firstPlayer)
-      currentGame.establishXandOPlayers()
-      updateDOMforFirstGame()
+      currentGame = new OnePlayerGame(firstPlayer);
+      currentGame.establishXandOPlayers();
+      updateDOMforFirstGame();
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
   };
 };
-
 
 function updateDMforFirstGame() {
   currentGame = new Game(firstPlayer, secondPlayer);
@@ -98,9 +98,6 @@ function updateDM() {
   currentGame.addChoice(event.target.id);
   currentGame.updateAvailableSquaresArray(event.target.id);
   currentGame.checkWinOrDraw();
-  if (numOfPlayers === "1") {
-    currentGame.updateWinCons(event.target.id)
-  }
 };
 
 function updateDOM() {
@@ -119,7 +116,7 @@ function setUpNewGame() {
   updateDOMforNewGame();
   if (numOfPlayers === "1") {
     currentGame.checkIfCompTurn();
-  }
+  };
 };
 
 function updateDMforNewGame() {
@@ -141,9 +138,7 @@ function navToFirstNameForm() {
   userPrompt.innerText = "What's Your Name?";
   userInputForm.classList = "name-form js-user-input-form";
   body.background = "./assets/wheat.jpg";
-  show(nameInput);
-  show(playBtn);
-  hide(numPlayersBtnBox);
+  hideOrShowInputElems();
 };
 
 function navToSecondNameForm() {
@@ -152,46 +147,46 @@ function navToSecondNameForm() {
   body.background = "./assets/flowers.jpg";
 };
 
-
 function updateDOMforFirstGame() {
   body.background = "./assets/sun.jpg";
-  hide(userInputForm);
   // show(clearBtn)
-  show(gameBoard);
-  show(newGameBtn);
-  show(playerBoxes[0]);
-  show(playerBoxes[1]);
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  hideOrShowGameBoard();
   updateTurnHeader();
 };
 
-function navToNewGame() {
-  currentGame = {},
-  firstPlayer = null,
-  secondPlayer = null,
-  numOfPlayers = 0;
-  hide(gameBoard)
-  hide(newGameBtn)
-  hide(playerBoxes[0])
-  hide(playerBoxes[1])
-  hide(playBtn)
-  show(userInputForm)
-  show(numPlayersBtnBox)
-  userInputForm.classList = "num-form js-user-input-form"
-  userPrompt.innerText = "How Many Players?"
-  body.background = "./assets/pond.jpg"
+function hideOrShowInputElems() {
+  nameInput.toggleAttribute("hidden");
+  numPlayersBtnBox.toggleAttribute("hidden");
+  playBtn.toggleAttribute("hidden");
 }
 
-// DOM MANIPULATION - ATOMIC FUNCTIONS //
+function navToNewGameForm() {
+  currentGame = {};
+  firstPlayer = null;
+  secondPlayer = null;
+  numOfPlayers = 0;
+  userInputForm.classList = "num-form js-user-input-form";
+  userPrompt.innerText = "How Many Players?";
+  body.background = "./assets/pond.jpg";
+  playBtn.classList = "play-btn js-play-btn";
+  resetDOM();
+  activateSquares();
+  hideOrShowGameBoard();
+  hideOrShowInputElems();
+}
 
-function updateNameFormDOM() {
-  if (nameInput.value) {
-    playBtn.innerText = "Let's Play!";
-  } else {
-    playBtn.innerText = "Continue as Guest";
-  };
-};
+function hideOrShowGameBoard() {
+  gameBoard.toggleAttribute("hidden");
+  newGameBtn.toggleAttribute("hidden");
+  playerBoxes[0].toggleAttribute("hidden");
+  playerBoxes[1].toggleAttribute("hidden");
+  userInputForm.toggleAttribute("hidden");
+  nameInput.toggleAttribute("hidden")
+}
+
+// DM MANIPULATION FOR FIRST GAME //
 
 function checkStorageForPlayer(userInput) {
   var newPlayer = {};
@@ -226,6 +221,17 @@ function setFirstOrSecond(newPlayer) {
     secondPlayer = newPlayer;
   } 
 };
+
+// DOM MANIPULATION ATOMIC FUNCTIONS //
+
+function updateNameFormDOM() {
+  if (nameInput.value) {
+    playBtn.innerText = "Let's Play!";
+  } else {
+    playBtn.innerText = "Continue as Guest";
+  };
+};
+
 
 function clearInput(){
   nameInput.value = "";
@@ -273,12 +279,4 @@ function resetDOM() {
 function updateWinCounter() {
   winCounts[0].innerHTML = currentGame.xPlayer.wins;
   winCounts[1].innerHTML = currentGame.oPlayer.wins;
-};
-  
-function hide(element){
-  element.classList.add('hidden');
-};
-  
-function show(element){
-  element.classList.remove('hidden');
 };

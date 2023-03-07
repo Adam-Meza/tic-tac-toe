@@ -1,83 +1,61 @@
 class OnePlayerGame extends Game {
   constructor(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares){
     super(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares)
-      this.secondPlayer = secondPlayer || new Player("Player 2")
-      this.winCons = {
-        A:["ADG", "AE", "AFH"],
-        B:["BD", "BEGH", "BF"],
-        C:["CDH", "CE", "CFG"],
-        D:["ADG", "BD", "CDH"],
-        E:["AE", "BEGH", "AFH"],
-        F:["AFH", "BF", "CFG"],
-        G:["ADG", "BEGH", "CFG"],
-        H:["CDH", "BEGH", "BF"]
-      };
+      this.secondPlayer = secondPlayer || new Player("Player 2");
+      this.compChoice = "";
     };
 
   passTurn() {
     super.passTurn();
     this.checkIfCompTurn();
-    if (!this.isOver) {
-      this.currentPlayer = this.xPlayer;
-    }
   };
     
-  checkIfCompTurn(){
+  checkIfCompTurn() {
     if (this.currentPlayer.name === "Player 2") {
-    disableBoardSqaures();
-    updateTurnHeader();
-    var compChoice = this.getCompChoice();
-    this.runCompTurn(compChoice);
+      disableBoardSqaures();
+      updateTurnHeader();
+      this.runCompTurn();
     };
   };
 
-  runCompTurn(compChoice){
-    this.compTurnDM(compChoice);
-    this.compTurnDOM(compChoice);
+  runCompTurn() {
+    this.setCompChoice();
+    this.compTurnDM();
+    this.compTurnDOM();
   };
   
-  compTurnDM(compChoice) {
-    this.addChoice(compChoice);
-    this.updateAvailableSquaresArray(compChoice);
-    this.updateWinCons(compChoice);
+  compTurnDM() {
+    this.addChoice(this.compChoice);
+    this.updateAvailableSquaresArray(this.compChoice);
     this.checkWinOrDraw();
   }
-    
-  compTurnDOM(compChoice){
-    this.updateSquare(compChoice);
+  
+  compTurnDOM() {
+    this.updateSquare();
     updateDOM();
-    this.reactiveSquares();
+    if (!this.isOver) {
+      this.currentPlayer = this.xPlayer;
+      this.reactiveSquares();
+    } else {
+      updateWinHeader();
+    };
   };
         
-  updateSquare(compChoice) {
+  updateSquare() {
     for (var i = 0; i < boardSquares.length; i++) {
-      if (boardSquares[i].id === compChoice) {
+      if (boardSquares[i].id === this.compChoice) {
         boardSquares[i].classList.add(currentGame.currentPlayer.letter);
         boardSquares[i].innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
       };
     };
   };
     
-  getCompChoice() {
-    var compChoice = null;
+  setCompChoice() {
     var randomIndex = Math.floor(Math.random() * this.availableSquares.length);
-    compChoice = this.availableSquares[randomIndex];
-    return compChoice;
+    this.compChoice = this.availableSquares[randomIndex];
   };
     
-  updateWinCons(choosenSquareId){
-    var winConArray = [];
-    for (var i = 65; i < 73; i++) {
-      winConArray = this.winCons[String.fromCharCode(i)]
-      for (var j= 0; j < winConArray.length; j++) {
-        if (winConArray[j] === choosenSquareId) {
-          winConArray.splice(j, 1);
-        };
-      };
-    };
-  };
-    
-  reactiveSquares(){
+  reactiveSquares() {
     var squareElem = ""
     for (var i = 0; i < this.availableSquares.length; i++) {
       squareElem = this.availableSquares[i]
@@ -89,7 +67,7 @@ class OnePlayerGame extends Game {
     };
   };
   
-  initiateNewGame(){
+  initiateNewGame() {
     super.initiateNewGame();
   };
 
@@ -105,18 +83,18 @@ class OnePlayerGame extends Game {
     super.updateAvailableSquaresArray(choosenSquareId);
   };
   
-  checkXandOPlayers(){
+  checkXandOPlayers() {
     super.checkXandOPlayers();
   };
-  establishXandOPlayers(){
+  establishXandOPlayers() {
     super.establishXandOPlayers();
   };
 
-  checkForDraw(){
+  checkForDraw() {
     super.checkForDraw();
   };
 
-  updatePlayersInStorage(){
+  updatePlayersInStorage() {
     super.updatePlayersInStorage();
   };
 
