@@ -1,55 +1,42 @@
-// GLOBAL DATA MODEL //
+// GLOBAL VARIABLES //
 var currentGame = {},
  firstPlayer = null,
  secondPlayer = null,
  numOfPlayers = 0;
 
 // QUERY SELECTORS //
-var gameBoard = document.querySelector('.js-game-board'),
- boardSquares = document.querySelectorAll('.js-board-square'),
- playerBoxes = document.querySelectorAll('.js-player-box'),
- winBoxHeaders = document.querySelectorAll('.js-win-box'),
- turnHeader = document.querySelector('.js-turn-header'),
- winCounts = document.querySelectorAll('.js-win-count'),
+var body = document.querySelector('.body'),
  nameInput = document.querySelector('.js-name-input'),
  userInputForm = document.querySelector('.js-user-input-form'),
+ userPrompt = document.querySelector('.js-user-prompt');
+ turnHeader = document.querySelector('.js-turn-header'),
+ 
+ gameBoard = document.querySelector('.js-game-board'),
+ boardSquares = document.querySelectorAll('.js-board-square'),
+ playerBoxes = document.querySelectorAll('.js-player-box'),
  playerNameTitles = document.querySelectorAll('.js-player-name'),
- newGameBtn = document.querySelector('.js-new-game-button'),
- playBtn = document.querySelector('.js-play-btn'),
- body = document.querySelector('.body'),
+ winBoxHeaders = document.querySelectorAll('.js-win-box'),
+ winCounts = document.querySelectorAll('.js-win-count'),
+
  numPlayersBtnBox = document.querySelector('.js-num-players-btn-box'),
  onePlayerBtn = document.querySelector('.js-one-player-btn'),
  twoPlayerBtn = document.querySelector('.js-one-player-btn'),
- userPrompt = document.querySelector('.js-user-prompt');
-
-// var clearBtn = document.querySelector('.js-clear-btn')
-// clearBtn.addEventListener('click', function(){
-//   localStorage.clear()
-// })
+ newGameBtn = document.querySelector('.js-new-game-button'),
+ playBtn = document.querySelector('.js-play-btn'),
 
 // EVENT LISTENERS // 
 
+nameInput.addEventListener('input', updateNameFormDOM);
+nameInput.addEventListener('submit', enterPressPlay);
+playBtn.addEventListener('click', playBtnFunctionality);
+newGameBtn.addEventListener('click', navToNewGameForm);
+
 numPlayersBtnBox.addEventListener('click', function() {
   event.preventDefault();
-  numOfPlayers = event.target.id
-  pageNagivation();
-});
-
-nameInput.addEventListener('input', function(){
-  updateNameFormDOM();
-  }
-);
-
-playBtn.addEventListener('click', function(event) {
-  event.preventDefault();
-    if (!nameInput.value) {
-      makeGenericPlayer();
-    } else {
-      var userInput = nameInput.value.toLowerCase();
-      checkStorageForPlayer(userInput);
-    };
-    clearInput();
+  if (event.target.id){
+    numOfPlayers = event.target.id
     pageNagivation();
+    };
   }
 );
 
@@ -62,57 +49,34 @@ gameBoard.addEventListener('click', function() {
   }
 );
 
-newGameBtn.addEventListener('click', function() {
-  updateDMforNewGame();
-  updateDOMforNewGame();
-  }
-);
-
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
 
 function pageNagivation() {
   if (!firstPlayer) {
-    navigateToFirstNameForm()
+    navToFirstNameForm();
   } else if (!secondPlayer && numOfPlayers === "2") {
-      console.log("80")
-      navigateToSecondNameForm()
+      navToSecondNameForm();
   } else if (!secondPlayer && numOfPlayers === "1") {
-      currentGame = new OnePlayerGame(firstPlayer)
-      currentGame.establishXandOPlayers()
-      updateDOMforFirstGame()
+      currentGame = new OnePlayerGame(firstPlayer);
+      currentGame.establishXandOPlayers();
+      updateDOMforFirstGame();
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
   };
 };
 
-function navigateToFirstNameForm() {
-  userPrompt.innerText = "What's Your Name?"
-  userInputForm.classList = "name-form js-user-input-form"
-  show(nameInput)
-  show(playBtn)
-  hide(numPlayersBtnBox)
-  body.background = "./assets/wheat.jpg"
+function playBtnFunctionality() {
+  event.preventDefault()
+  if (!nameInput.value) {
+    makeGenericPlayer();
+  } else {
+    var userInput = nameInput.value.toLowerCase();
+    checkStorageForPlayer(userInput);
+  };
+  clearInput();
+  pageNagivation();
 }
-
-function navigateToSecondNameForm() {
-  userInputForm.classList = "second-name-form js-user-input-form";
-  playBtn.classList = "second-play-btn js-play-btn";
-  body.background = "./assets/flowers.jpg";
-}
-
-function updateDOMforFirstGame() {
-  hide(userInputForm);
-  // show(clearBtn)
-  show(gameBoard);
-  show(newGameBtn);
-  show(playerBoxes[0]);
-  show(playerBoxes[1]);
-  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
-  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
-  body.background = "./assets/sun.jpg";
-  updateTurnHeader();
-};
 
 function updateDMforFirstGame() {
   currentGame = new Game(firstPlayer, secondPlayer);
@@ -140,8 +104,8 @@ function setUpNewGame() {
   updateDMforNewGame();
   updateDOMforNewGame();
   if (numOfPlayers === "1") {
-    currentGame.checkIfCompTurn()
-  }
+    currentGame.checkIfCompTurn();
+  };
 };
 
 function updateDMforNewGame() {
@@ -157,14 +121,69 @@ function updateDOMforNewGame() {
   updateWinCounter();
 };
 
-// DOM MANIPULATION - ATOMIC FUNCTIONS //
+// NAVIGATION FUNCTIONS//
 
-function updateNameFormDOM(){
-  if (nameInput.value) {
-    playBtn.innerText = "Let's Play!";
-  } else {
-    playBtn.innerText = "Continue as Guest";
-  };
+function navToFirstNameForm() {
+  userPrompt.innerText = "What's Your Name?";
+  userInputForm.classList = "name-form js-user-input-form";
+  body.background = "./assets/wheat.jpg";
+  hideOrShowInputElems();
+};
+
+function navToSecondNameForm() {
+  userInputForm.classList = "second-name-form js-user-input-form";
+  playBtn.classList = "second-play-btn js-play-btn";
+  body.background = "./assets/flowers.jpg";
+};
+
+function updateDOMforFirstGame() {
+  body.background = "./assets/sun.jpg";
+  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
+  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  hideOrShowGameBoard();
+  updateTurnHeader();
+};
+
+function hideOrShowInputElems() {
+  nameInput.toggleAttribute("hidden");
+  numPlayersBtnBox.toggleAttribute("hidden");
+  playBtn.toggleAttribute("hidden");
+};
+
+function navToNewGameForm() {
+  resetDMforFirstGame();
+  resetDOMforFirstGame();
+  resetDOM();
+  activateSquares();
+  hideOrShowGameBoard();
+  hideOrShowInputElems();
+};
+
+function hideOrShowGameBoard() {
+  gameBoard.toggleAttribute("hidden");
+  newGameBtn.toggleAttribute("hidden");
+  playerBoxes[0].toggleAttribute("hidden");
+  playerBoxes[1].toggleAttribute("hidden");
+  userInputForm.toggleAttribute("hidden");
+  nameInput.toggleAttribute("hidden")
+};
+
+// DM/DOM MANIPULATION FOR FIRST GAME //
+
+function resetDMforFirstGame(){
+  currentGame = {};
+  firstPlayer = null;
+  secondPlayer = null;
+  numOfPlayers = 0;
+};
+
+function resetDOMforFirstGame(){
+  winCounts[0].innerHTML = "0"
+  winCounts[1].innerHTML = "0"
+  userInputForm.classList = "num-form js-user-input-form";
+  userPrompt.innerText = "How Many Players?";
+  body.background = "./assets/pond.jpg";
+  playBtn.classList = "play-btn js-play-btn";
 };
 
 function checkStorageForPlayer(userInput) {
@@ -201,6 +220,22 @@ function setFirstOrSecond(newPlayer) {
   } 
 };
 
+// DOM MANIPULATION ATOMIC FUNCTIONS //
+
+function updateNameFormDOM() {
+  if (nameInput.value) {
+    playBtn.innerText = "Let's Play!";
+  } else {
+    playBtn.innerText = "Continue as Guest";
+  };
+};
+
+function enterPressPlay(){
+  if (event.keyCode === 13) {
+    playBtnFunctionality();
+  };
+};
+
 function clearInput(){
   nameInput.value = "";
 };
@@ -227,7 +262,7 @@ function updateWinHeader() {
   
 function updateTurnHeader() {
   turnHeader.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
-}
+};
   
 function activateSquares () {
   for (var i = 0; i < boardSquares.length; i++) {
@@ -248,14 +283,3 @@ function updateWinCounter() {
   winCounts[0].innerHTML = currentGame.xPlayer.wins;
   winCounts[1].innerHTML = currentGame.oPlayer.wins;
 };
-  
-function hide(element){
-  element.classList.add('hidden');
-};
-  
-function show(element){
-  element.classList.remove('hidden');
-};
-
-
-

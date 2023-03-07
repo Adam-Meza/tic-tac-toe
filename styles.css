@@ -1,23 +1,4 @@
-/* colors;
-
-background: #fdfff1
-
-greenlight #e1e9ba
-greendark #a8bd82
-
-bluelight #dceff3
-bluedark #8db4ca
-
-pinklight f5ddf1
-pinkdark e5a6c0
-
-brownlight #eee0c0
-browndark #b17822
-
-orange light
-orange dark */
-
-/* WIDERANGING RULES */
+/* WIDE RANDING RULLES */
 
 body {
   width: auto;
@@ -30,24 +11,12 @@ body {
 }
 
 body,
+button,
 .main-container,
 .player-box,
-.new-game-button,
-.name-input,
-.clear-storage-btn {
+.name-input {
   color: #b17822;
   font-family: 'Amatic SC', cursive;
-}
-
-.main-container,
-.player-box,
-.win-box,
-.name-form, 
-.num-form,
-.second-name-form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 button,
@@ -56,10 +25,15 @@ button,
 .name-form, 
 .second-name-form,
 .name-input,
-.board-square {
+.board-square,
+.player-box,
+.main-container {
   border-radius: 30px;
   border: none;
   outline: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* MAIN CONTAINER */
@@ -67,10 +41,6 @@ button,
 .main-container{
   height: 800px;
   justify-content: center;
-}
-
-.num-form {
-  background-color: #f5ddf1;
 }
 
 .game-board, 
@@ -84,20 +54,29 @@ form {
 }
 
 form {
-  background-color: #dceff3;
-  color:#8db4ca;
   margin-bottom: 100px;
   font-size: 50px;
   justify-content: center;
 }
 
+.num-form {
+  color:#e5a6c0;
+  background-color: #f5ddf1;
+}
+
+.name-form{
+  color:#8db4ca;
+  background-color: #dceff3;
+}
+
 .second-name-form {
-background-color: #e1e9ba;
-color:#a8bd82;
+  color:#a8bd82;
+  background-color: #e1e9ba;
 }
 
   .user-prompt{
     margin: 10px;
+    padding-top: 20px;
   }
 
   .name-input{
@@ -120,6 +99,10 @@ color:#a8bd82;
   .board-square img{
     width: 80px;
     height: 80px;
+  }
+
+  .board-square:hover{
+    background-color: #8db4ca;
   }
 
 /* PLAYER BOX */
@@ -151,26 +134,21 @@ color:#a8bd82;
 /* BUTTONS */
 
 button {
-  cursor: pointer;
-  font-family: 'Amatic SC', cursive;
-}
-
-button:active {
-transform: translateY(3px)
-}
-
-.new-game-button, 
-.play-btn, 
-.second-play-btn,
-.clear-storage-btn,
-.num-players-btn
-{
   width: 200px;
   height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   font-size: 30px;
+  font-family: 'Amatic SC', cursive;
   padding: 5px 20px 5px 20px;
   background-color: #eee0c0;
+  cursor: pointer;
 }
+
+  button:active {
+    transform: translateY(3px);
+  }
 
 .num-players-btn-box {
   width: 100%;
@@ -189,37 +167,38 @@ transform: translateY(3px)
   background-color: #e5a6c0;
 }
 
+  .num-players-btn:hover, .num-players-btn:active {
+    background-color: #d47baf;
+  }
+
 .play-btn {
   color: #dceff3;
   background-color:#8db4ca;
 }
 
-  .play-btn:hover {
-    background-color: #6095b3;
-  }
-
-  .play-btn:active {
+  .play-btn:hover, .play-btn:active {
     background-color: #6095b3;
   }
 
 .second-play-btn{
-  background-color:#a8bd82;
   color: #e1e9ba;
+  background-color:#a8bd82;
 }
 
-  .second-play-btn:hover {
+  .second-play-btn:hover, .second-play-btn:active {
     background-color: #88994b;
   }
 
-  .second-play-btn:active {
-    background-color: #88994b;
-  }
-
-.new-game-button:hover{
-  background-color: #cfb082;
+.new-game-button{
+  font-size: 40px;
+  color: #b17822;
 }
 
+  .new-game-button:hover, .new-game-button:active{
+    background-color: #cfb082;
+  }
 
+/* MISC */
 
 .turn-header,
 .player-name{
@@ -236,18 +215,15 @@ p {
 .O {
   background-color: #e1e9ba;
 }
-  .O:hover {
-  background-color: #e1e9ba;
-  }
 
-.X {
+.X{
   background-color: #f5ddf1;
 }
 
-  .X:hover {
-    background-color: #f5ddf1;
-  }
+:disabled {
+  pointer-events: none;
+}
 
-.hidden {
+[hidden] {
   display: none;
 }

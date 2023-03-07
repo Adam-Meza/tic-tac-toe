@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css">
   </head>
   <body  class ="body" background="./assets/pond.jpg">
-    <div class="player-box js-player-box hidden">
+    <div class="player-box js-player-box" hidden>
       <h1 class="player-name js-player-name"></h1>
       <div class="win-box js-win-box" name="player-1">
         <p class="win-count js-win-count">0<p>
@@ -19,16 +19,16 @@
     <section class="main-container">
       <h1 class="turn-header js-turn-header">Welcome! Let's Play Tic-Tac-Toe!
       </h1>
-      <form class="num-form js-user-input-form">
+      <form class="num-form js-user-input-form"  >
         <h1 class="user-prompt js-user-prompt">How Many Players?</h1>
-        <input type="text" class="name-input js-name-input hidden">
+        <input type="text" class="name-input js-name-input" onkeypress="enterPressPlay(event)" hidden>
         <div class="num-players-btn-box js-num-players-btn-box">
           <button class="num-players-btn js-one-player-btn" id="1">1</button>
           <button class="num-players-btn js-two-players-btn" id="2">2</button>
         </div>
-        <button class="play-btn js-play-btn hidden">Continue as Guest</button>
+        <button class="play-btn js-play-btn" hidden>Continue as Guest</button>
       </form>
-      <section class="game-board js-game-board hidden">
+      <section class="game-board js-game-board" hidden>
         <button class="board-square js-board-square" id="ADG" ></button>
         <button class="board-square js-board-square" id="BD" src=""></button>
         <button class="board-square js-board-square" id="CDH" src=""></button>
@@ -39,10 +39,8 @@
         <button class="board-square js-board-square" id="BF" src=""></button>
         <button class="board-square js-board-square" id="CFG" src=""></button>
       </section>
-      <button class="js-new-game-button new-game-button hidden">New Game</button>
-      <!-- <button class="clear-storage-btn js-clear-btn hidden">Clear Storage</button> -->
-    </section>
-    <div class="player-box js-player-box hidden">
+      <button class="js-new-game-button new-game-button" hidden>New Game</button>    </section>
+    <div class="player-box js-player-box" hidden>
       <h1 class="player-name js-player-name"></h1>
       <div class="win-box js-win-box" name="player-2">
         <p class="win-count js-win-count">0<p>

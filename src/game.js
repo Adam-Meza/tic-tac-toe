@@ -43,6 +43,7 @@ class Game {
     var playerLetter = this.currentPlayer.letter;
     for (var i = 0; i < choosenSquareId.length; i++) {
       this.choosenSquares[choosenSquareId.charAt(i)][playerLetter].push(playerLetter);
+    console.log("It adds it to the DM")
     };
   };
 
