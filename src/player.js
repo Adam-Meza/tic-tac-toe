@@ -5,6 +5,6 @@ class Player {
       this.wins = 0
       this.token = token
       this.id = Date.now()
-  }
+  };
 
-}
+};

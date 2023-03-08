@@ -22,7 +22,7 @@ var body = document.querySelector('.body'),
  onePlayerBtn = document.querySelector('.js-one-player-btn'),
  twoPlayerBtn = document.querySelector('.js-one-player-btn'),
  newGameBtn = document.querySelector('.js-new-game-button'),
- playBtn = document.querySelector('.js-play-btn'),
+ playBtn = document.querySelector('.js-play-btn');
 
 // EVENT LISTENERS // 
 
@@ -194,7 +194,6 @@ function checkStorageForPlayer(userInput) {
   for (var i = 0; i < localStorage.length; i++) {
     if (localStorage.key([i]) === `${userInput}`) {
       newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
-      console.log(newPlayer)
       setFirstOrSecond(newPlayer);
       return true;
     };
