@@ -34,7 +34,7 @@ newGameBtn.addEventListener('click', navToNewGameForm);
 numPlayersBtnBox.addEventListener('click', function() {
   event.preventDefault();
   if (event.target.id){
-    numOfPlayers = event.target.id
+    numOfPlayers = event.target.id;
     pageNagivation();
     };
   }
@@ -108,6 +108,15 @@ function setUpNewGame() {
   };
 };
 
+function navToNewGameForm() {
+  resetDMforFirstGame();
+  resetDOMforFirstGame();
+  resetDOM();
+  activateSquares();
+  hideOrShowGameBoard();
+  hideOrShowInputElems();
+};
+
 function updateDMforNewGame() {
   currentGame.updatePlayersInStorage();
   currentGame.initiateNewGame();
@@ -136,14 +145,6 @@ function navToSecondNameForm() {
   body.background = "./assets/flowers.jpg";
 };
 
-function updateDOMforFirstGame() {
-  body.background = "./assets/sun.jpg";
-  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
-  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
-  updateWinCounter();
-  hideOrShowGameBoard();
-  updateHeader();
-};
 
 function hideOrShowInputElems() {
   nameInput.toggleAttribute("hidden");
@@ -151,14 +152,6 @@ function hideOrShowInputElems() {
   playBtn.toggleAttribute("hidden");
 };
 
-function navToNewGameForm() {
-  resetDMforFirstGame();
-  resetDOMforFirstGame();
-  resetDOM();
-  activateSquares();
-  hideOrShowGameBoard();
-  hideOrShowInputElems();
-};
 
 function hideOrShowGameBoard() {
   gameBoard.toggleAttribute("hidden");
@@ -185,6 +178,15 @@ function resetDOMforFirstGame(){
   userPrompt.innerText = "How Many Players?";
   body.background = "./assets/pond.jpg";
   playBtn.classList = "play-btn js-play-btn";
+};
+
+function updateDOMforFirstGame() {
+  body.background = "./assets/sun.jpg";
+  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
+  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  updateWinCounter();
+  hideOrShowGameBoard();
+  updateHeader();
 };
 
 function checkStorageForPlayer(userInput) {

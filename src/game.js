@@ -26,7 +26,7 @@ class Game {
     if (numOfPlayers === "2") {
       currentGame = new Game(this.secondPlayer, this.firstPlayer);
     } else if (numOfPlayers === "1") {
-      currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer)
+      currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer);
     }
   };
 
@@ -59,6 +59,13 @@ class Game {
     };
     this.checkForDraw();
   };
+  
+  checkForDraw() {
+    if (this.availableSquares.length === 0) {
+      this.isOver = true;
+      this.isDraw = true;
+    };
+  };
 
   updateAvailableSquaresArray(choosenSquareId) {
     for (var i = 0; i < this.availableSquares.length; i++) {
@@ -87,13 +94,6 @@ class Game {
     this.secondPlayer.token = "./assets/O_icon.jpg";
   };
 
-  checkForDraw() {
-    if (this.availableSquares.length === 0) {
-      this.isOver = true;
-      this.isDraw = true;
-    };
-  };
-
   updatePlayersInStorage() {
     if (this.winner) {
       for (var i = 0; i < localStorage.length; i++) {
@@ -105,7 +105,7 @@ class Game {
   };
 
   increaseWins() {
-    this.currentPlayer.wins += 1
+    this.currentPlayer.wins += 1;
   }
 
 };
