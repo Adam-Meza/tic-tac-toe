@@ -1,11 +1,11 @@
 // GLOBAL VARIABLES //
-var currentGame = {},
+let currentGame = {},
  firstPlayer = null,
  secondPlayer = null,
  numOfPlayers = 0;
 
 // QUERY SELECTORS //
-var body = document.querySelector('.body'),
+const body = document.querySelector('.body'),
  nameInput = document.querySelector('.js-name-input'),
  userInputForm = document.querySelector('.js-user-input-form'),
  userPrompt = document.querySelector('.js-user-prompt');
@@ -24,34 +24,138 @@ var body = document.querySelector('.body'),
  newGameBtn = document.querySelector('.js-new-game-button'),
  playBtn = document.querySelector('.js-play-btn');
 
-// EVENT LISTENERS // 
+// NAVIGATION FUNCTIONS//
 
-nameInput.addEventListener('input', updateNameFormDOM);
-nameInput.addEventListener('submit', enterPressPlay);
-playBtn.addEventListener('click', playBtnFunctionality);
-newGameBtn.addEventListener('click', navToNewGameForm);
+let navToFirstNameForm = () => {
+  userPrompt.innerText = "What's Your Name?";
+  userInputForm.classList = "name-form js-user-input-form";
+  body.background = "./assets/wheat.jpg";
+  hideOrShowInputElems();
+};
 
-numPlayersBtnBox.addEventListener('click', function() {
-  event.preventDefault();
-  if (event.target.id){
-    numOfPlayers = event.target.id;
-    pageNagivation();
-    };
+let navToSecondNameForm = () => {
+  userInputForm.classList = "second-name-form js-user-input-form";
+  playBtn.classList = "second-play-btn js-play-btn";
+  body.background = "./assets/flowers.jpg";
+};
+
+let hideOrShowInputElems = () => {
+  nameInput.toggleAttribute("hidden");
+  numPlayersBtnBox.toggleAttribute("hidden");
+  playBtn.toggleAttribute("hidden");
+};
+
+let hideOrShowGameBoard = () => {
+  gameBoard.toggleAttribute("hidden");
+  newGameBtn.toggleAttribute("hidden");
+  playerBoxes[0].toggleAttribute("hidden");
+  playerBoxes[1].toggleAttribute("hidden");
+  userInputForm.toggleAttribute("hidden");
+  nameInput.toggleAttribute("hidden")
+};
+
+// DM/DOM MANIPULATION FOR FIRST GAME //
+
+let updateHeader = () => {
+  if (currentGame.isDraw) {
+    header.innerHTML = "It's a Draw!";
+  } else if (currentGame.isOver) {
+    header.innerHTML = `${currentGame.currentPlayer.name} wins!`;
+  } else {
+    header.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
   }
-);
+};
 
-gameBoard.addEventListener('click', function() {
-  if (event.target.id) {
-    updateDM();
-    updateTargetSquare();
-    updateDOM();
+let updateWinCounter = () => {
+  winCounts[0].innerHTML = currentGame.xPlayer.wins;
+  winCounts[1].innerHTML = currentGame.oPlayer.wins;
+};
+
+let setFirstOrSecond = (newPlayer) => {
+  if (newPlayer && !firstPlayer) {
+    firstPlayer = newPlayer;
+  } else if (newPlayer) {
+    secondPlayer = newPlayer;
+  } 
+};
+
+let resetDMforFirstGame = () => {
+  currentGame = {};
+  firstPlayer = null;
+  secondPlayer = null;
+  numOfPlayers = 0;
+};
+
+let resetDOMforFirstGame = () => {
+  winCounts[0].innerHTML = "0"
+  winCounts[1].innerHTML = "0"
+  userInputForm.classList = "num-form js-user-input-form";
+  userPrompt.innerText = "How Many Players?";
+  body.background = "./assets/pond.jpg";
+  playBtn.classList = "play-btn js-play-btn";
+};
+
+let updateDOMforFirstGame = () => {
+  body.background = "./assets/sun.jpg";
+  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
+  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+  updateWinCounter();
+  hideOrShowGameBoard();
+  updateHeader();
+};
+
+let makeNewPlayer = (userInput) => {
+  newPlayer = new Player(`${userInput}`);
+  localStorage.setItem(`${userInput}`, JSON.stringify(newPlayer));
+  setFirstOrSecond(newPlayer);
+};
+
+let checkStorageForPlayer = (userInput) => {
+  var newPlayer = {};
+  for (var i = 0; i < localStorage.length; i++) {
+    if (localStorage.key([i]) === `${userInput}`) {
+      newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
+      setFirstOrSecond(newPlayer);
+      return true;
     };
-  }
-);
+  };
+  makeNewPlayer(userInput);
+};
+
+let makeGenericPlayer = () => firstPlayer ? secondPlayer = new Player("Player 2") : firstPlayer = new Player("Player 1");
+
+// DOM MANIPULATION ATOMIC FUNCTIONS //
+
+let disableBoardSqaures = () => boardSquares.forEach(square => square.disabled = true);
+let activateSquares = () => boardSquares.forEach(square => square.disabled = false);
+let updateNameFormDOM = () => nameInput.value ? playBtn.innerText = "Let's Play!" : playBtn.innerText = "Continue as Guest";
+let clearInput = () => nameInput.value = "";
+
+let updateTargetSquare = () => {
+  event.target.disabled = true;
+  event.target.classList.add(currentGame.currentPlayer.letter);
+  event.target.innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
+};
+
+let resetDOM = () => {
+  boardSquares.forEach(square => {
+    square.disabled = false;
+    square.classList.remove("X");
+    square.classList.remove("O");
+    square.innerHTML = "";
+    }
+  );
+};
+
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
 
-function pageNagivation() {
+let updateDMforFirstGame = () => {
+  currentGame = new Game(firstPlayer, secondPlayer);
+  currentGame.establishXandOPlayers();
+};
+
+let pageNagivation = () => {
   if (!firstPlayer) {
     navToFirstNameForm();
   } else if (!secondPlayer && numOfPlayers === "2") {
@@ -66,7 +170,7 @@ function pageNagivation() {
   };
 };
 
-function playBtnFunctionality() {
+let  playBtnFunctionality = () => {
   event.preventDefault()
   if (!nameInput.value) {
     makeGenericPlayer();
@@ -78,18 +182,34 @@ function playBtnFunctionality() {
   pageNagivation();
 }
 
-function updateDMforFirstGame() {
-  currentGame = new Game(firstPlayer, secondPlayer);
-  currentGame.establishXandOPlayers();
-};
+let enterPressPlay = () => event.keyCode === 13 ? playBtnFunctionality() : null;
 
-function updateDM() {
+let updateDM = () => {
   currentGame.addChoice(event.target.id);
   currentGame.updateAvailableSquaresArray(event.target.id);
   currentGame.checkWinOrDraw();
 };
 
-function updateDOM() {
+let updateDMforNewGame = () => {
+  currentGame.updatePlayersInStorage();
+  currentGame.initiateNewGame();
+  currentGame.checkXandOPlayers();
+};
+
+let  updateDOMforNewGame = () => {
+  activateSquares();
+  resetDOM();
+  updateHeader();
+  updateWinCounter();
+};
+
+let setUpNewGame = () => {
+  updateDMforNewGame();
+  updateDOMforNewGame();
+  numOfPlayers === "1" ? currentGame.checkIfCompTurn(): null;
+};
+
+let updateDOM = () => {
   if (currentGame.isOver) {
     disableBoardSqaures();
     updateHeader();
@@ -100,15 +220,7 @@ function updateDOM() {
   };
 };
 
-function setUpNewGame() {
-  updateDMforNewGame();
-  updateDOMforNewGame();
-  if (numOfPlayers === "1") {
-    currentGame.checkIfCompTurn();
-  };
-};
-
-function navToNewGameForm() {
+let navToNewGameForm = () => {
   resetDMforFirstGame();
   resetDOMforFirstGame();
   resetDOM();
@@ -117,170 +229,27 @@ function navToNewGameForm() {
   hideOrShowInputElems();
 };
 
-function updateDMforNewGame() {
-  currentGame.updatePlayersInStorage();
-  currentGame.initiateNewGame();
-  currentGame.checkXandOPlayers();
-};
+// EVENT LISTENERS // 
 
-function updateDOMforNewGame() {
-  activateSquares();
-  resetDOM();
-  updateHeader();
-  updateWinCounter();
-};
+nameInput.addEventListener('input', updateNameFormDOM);
+nameInput.addEventListener('submit', enterPressPlay);
+playBtn.addEventListener('click', playBtnFunctionality);
+newGameBtn.addEventListener('click', navToNewGameForm);
 
-// NAVIGATION FUNCTIONS//
-
-function navToFirstNameForm() {
-  userPrompt.innerText = "What's Your Name?";
-  userInputForm.classList = "name-form js-user-input-form";
-  body.background = "./assets/wheat.jpg";
-  hideOrShowInputElems();
-};
-
-function navToSecondNameForm() {
-  userInputForm.classList = "second-name-form js-user-input-form";
-  playBtn.classList = "second-play-btn js-play-btn";
-  body.background = "./assets/flowers.jpg";
-};
-
-
-function hideOrShowInputElems() {
-  nameInput.toggleAttribute("hidden");
-  numPlayersBtnBox.toggleAttribute("hidden");
-  playBtn.toggleAttribute("hidden");
-};
-
-
-function hideOrShowGameBoard() {
-  gameBoard.toggleAttribute("hidden");
-  newGameBtn.toggleAttribute("hidden");
-  playerBoxes[0].toggleAttribute("hidden");
-  playerBoxes[1].toggleAttribute("hidden");
-  userInputForm.toggleAttribute("hidden");
-  nameInput.toggleAttribute("hidden")
-};
-
-// DM/DOM MANIPULATION FOR FIRST GAME //
-
-function resetDMforFirstGame(){
-  currentGame = {};
-  firstPlayer = null;
-  secondPlayer = null;
-  numOfPlayers = 0;
-};
-
-function resetDOMforFirstGame(){
-  winCounts[0].innerHTML = "0"
-  winCounts[1].innerHTML = "0"
-  userInputForm.classList = "num-form js-user-input-form";
-  userPrompt.innerText = "How Many Players?";
-  body.background = "./assets/pond.jpg";
-  playBtn.classList = "play-btn js-play-btn";
-};
-
-function updateDOMforFirstGame() {
-  body.background = "./assets/sun.jpg";
-  playerNameTitles[0].innerText = currentGame.firstPlayer.name;
-  playerNameTitles[1].innerText = currentGame.secondPlayer.name;
-  updateWinCounter();
-  hideOrShowGameBoard();
-  updateHeader();
-};
-
-function checkStorageForPlayer(userInput) {
-  var newPlayer = {};
-  for (var i = 0; i < localStorage.length; i++) {
-    if (localStorage.key([i]) === `${userInput}`) {
-      newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
-      setFirstOrSecond(newPlayer);
-      return true;
+numPlayersBtnBox.addEventListener('click', () => {
+  event.preventDefault();
+  if (event.target.id){
+    numOfPlayers = event.target.id;
+    pageNagivation();
     };
-  };
-  makeNewPlayer(userInput);
-};
-
-function makeGenericPlayer() {
-  if (!firstPlayer) {
-    firstPlayer = new Player("Player 1");
-  } else {
-    secondPlayer = new Player("Player 2");
-  };
-};
-
-function makeNewPlayer(userInput) {
-  newPlayer = new Player(`${userInput}`);
-  localStorage.setItem(`${userInput}`, JSON.stringify(newPlayer));
-  setFirstOrSecond(newPlayer);
-};
-
-function setFirstOrSecond(newPlayer) {
-  if (newPlayer && !firstPlayer) {
-    firstPlayer = newPlayer;
-  } else if (newPlayer) {
-    secondPlayer = newPlayer;
-  } 
-};
-
-// DOM MANIPULATION ATOMIC FUNCTIONS //
-
-function updateNameFormDOM() {
-  if (nameInput.value) {
-    playBtn.innerText = "Let's Play!";
-  } else {
-    playBtn.innerText = "Continue as Guest";
-  };
-};
-
-function enterPressPlay(){
-  if (event.keyCode === 13) {
-    playBtnFunctionality();
-  };
-};
-
-function clearInput(){
-  nameInput.value = "";
-};
-
-function updateTargetSquare() {
-  event.target.disabled = true;
-  event.target.classList.add(currentGame.currentPlayer.letter);
-  event.target.innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
-};
-
-function disableBoardSqaures() {
-  for (var i = 0; i < boardSquares.length; i++) {
-    boardSquares[i].disabled = true;
-  };
-};
-  
-function updateHeader() {
-  if (currentGame.isDraw) {
-    header.innerHTML = "It's a Draw!";
-  } else if (currentGame.isOver) {
-    header.innerHTML = `${currentGame.currentPlayer.name} wins!`;
-  } else {
-    header.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
   }
-};
-  
-function activateSquares () {
-  for (var i = 0; i < boardSquares.length; i++) {
-    boardSquares[i].disabled = false;
-  };
-};
+);
 
-function resetDOM() {
-  for (var i = 0; i < boardSquares.length; i++) {
-    boardSquares[i].disabled = false;
-    boardSquares[i].classList.remove("X");
-    boardSquares[i].classList.remove("O");
-    boardSquares[i].innerHTML = "";
-  };
-};
-  
-function updateWinCounter() {
-  winCounts[0].innerHTML = currentGame.xPlayer.wins;
-  winCounts[1].innerHTML = currentGame.oPlayer.wins;
-};
+gameBoard.addEventListener('click', () => {
+  if (event.target.id) {
+    updateDM();
+    updateTargetSquare();
+    updateDOM();
+    };
+  }
+);

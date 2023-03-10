@@ -32,11 +32,8 @@ class Game {
 
   passTurn() {
     this.turn += 1;
-    if (this.turn % 2 === 0) {
-      this.currentPlayer = this.secondPlayer;
-    } else {
-      this.currentPlayer = this.firstPlayer;
-    };
+    this.turn % 2 === 0 ? this.currentPlayer = this.secondPlayer : 
+    this.currentPlayer = this.firstPlayer;
   };
 
   addChoice(choosenSquareId) {
@@ -62,17 +59,17 @@ class Game {
   
   checkForDraw() {
     if (this.availableSquares.length === 0) {
-      this.isOver = true;
-      this.isDraw = true;
+      this.isOver = true
+      this.isDraw = true
     };
   };
 
   updateAvailableSquaresArray(choosenSquareId) {
-    for (var i = 0; i < this.availableSquares.length; i++) {
-      if (choosenSquareId === this.availableSquares[i]) {
+    this.availableSquares.forEach((id, i) => {
+      if (choosenSquareId === id) { 
         this.availableSquares.splice(i,1);
-      };
-    };
+      }
+    });
   };
 
   checkXandOPlayers() {
