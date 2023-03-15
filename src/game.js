@@ -10,7 +10,7 @@ class Game {
     this.isDraw = false;
     this.winner = null
     this.availableSquares = ["ADG", "BD", "CDH", "AE", "BEGH", "CE", "AFH", "BF", "CFG",];
-    this.choosenSquares = {
+    this.chosenSquares = {
         A: {X:[], O:[]},
         B: {X:[], O:[]},
         C: {X:[], O:[]},
@@ -23,33 +23,27 @@ class Game {
     };
 
   initiateNewGame() {
-    if (numOfPlayers === "2") {
-      currentGame = new Game(this.secondPlayer, this.firstPlayer);
-    } else if (numOfPlayers === "1") {
+    numOfPlayers === "2" ? currentGame = new Game(this.secondPlayer, this.firstPlayer) :
       currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer);
-    }
   };
 
   passTurn() {
     this.turn += 1;
-    if (this.turn % 2 === 0) {
-      this.currentPlayer = this.secondPlayer;
-    } else {
-      this.currentPlayer = this.firstPlayer;
-    };
+    this.turn % 2 === 0 ? this.currentPlayer = this.secondPlayer : 
+    this.currentPlayer = this.firstPlayer;
   };
 
-  addChoice(choosenSquareId) {
+  addChoice(chosenSquareId) {
     var playerLetter = this.currentPlayer.letter;
-    for (var i = 0; i < choosenSquareId.length; i++) {
-      this.choosenSquares[choosenSquareId.charAt(i)][playerLetter].push(playerLetter);
+    for (var i = 0; i < chosenSquareId.length; i++) {
+      this.chosenSquares[chosenSquareId.charAt(i)][playerLetter].push(playerLetter);
     };
   };
 
   checkWinOrDraw() {
     var winConArray = ""
     for (var i = 65; i < 73; i++) {
-      winConArray = this.choosenSquares[String.fromCharCode(i)][this.currentPlayer.letter];
+      winConArray = this.chosenSquares[String.fromCharCode(i)][this.currentPlayer.letter];
       if (winConArray.length === 3) {
         this.isOver = true;
         this.winner = this.currentPlayer;
@@ -62,17 +56,17 @@ class Game {
   
   checkForDraw() {
     if (this.availableSquares.length === 0) {
-      this.isOver = true;
-      this.isDraw = true;
+      this.isOver = true
+      this.isDraw = true
     };
   };
 
-  updateAvailableSquaresArray(choosenSquareId) {
-    for (var i = 0; i < this.availableSquares.length; i++) {
-      if (choosenSquareId === this.availableSquares[i]) {
+  updateAvailableSquaresArray(chosenSquareId) {
+    this.availableSquares.forEach((id, i) => {
+      if (chosenSquareId === id) { 
         this.availableSquares.splice(i,1);
-      };
-    };
+      }
+    });
   };
 
   checkXandOPlayers() {
@@ -106,6 +100,6 @@ class Game {
 
   increaseWins() {
     this.currentPlayer.wins += 1;
-  }
+  };
 
 };
