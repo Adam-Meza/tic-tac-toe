@@ -1,6 +1,6 @@
 class OnePlayerGame extends Game {
-  constructor(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares){
-    super(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, choosenSquares, availableSquares)
+  constructor(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, chosenSquares, availableSquares){
+    super(firstPlayer, secondPlayer, currentPlayer, oPlayer, xPlayer, turn, isOver, isDraw, winner, chosenSquares, availableSquares)
       this.secondPlayer = secondPlayer || new Player("Player 2");
       this.compChoice = "";
     };
@@ -41,45 +41,43 @@ class OnePlayerGame extends Game {
   };
         
   updateSquare() {
-    for (var i = 0; i < boardSquares.length; i++) {
-      if (boardSquares[i].id === this.compChoice) {
-        boardSquares[i].classList.add(currentGame.currentPlayer.letter);
-        boardSquares[i].innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
+    boardSquares.forEach((square) => {
+      if (square.id === this.compChoice) {
+        square.classList.add(currentGame.currentPlayer.letter);
+        square.innerHTML = `<img src="${currentGame.currentPlayer.token}">`;
       };
-    };
+    });
   };
-    
+
   setCompChoice() {
     var randomIndex = Math.floor(Math.random() * this.availableSquares.length);
     this.compChoice = this.availableSquares[randomIndex];
   };
     
   reactiveSquares() {
-    var squareElem = ""
-    for (var i = 0; i < this.availableSquares.length; i++) {
-      squareElem = this.availableSquares[i]
-      for (var j = 0; j < boardSquares.length; j++) {
-        if (squareElem === boardSquares[j].id) {
-          boardSquares[j].disabled = false;
+    this.availableSquares.forEach((availSquare) => {
+      boardSquares.forEach((boardSquare) => {        
+        if (availSquare === boardSquare.id) {
+        boardSquare.disabled = false;
         };
-      };
-    };
+      });
+    });
   };
   
   initiateNewGame() {
     super.initiateNewGame();
   };
 
-  addChoice(choosenSquareId) {
-    super.addChoice(choosenSquareId);
+  addChoice(chosenSquareId) {
+    super.addChoice(chosenSquareId);
   };
 
   checkWinOrDraw() {
     super.checkWinOrDraw();
   };
   
-  updateAvailableSquaresArray(choosenSquareId){
-    super.updateAvailableSquaresArray(choosenSquareId);
+  updateAvailableSquaresArray(chosenSquareId){
+    super.updateAvailableSquaresArray(chosenSquareId);
   };
   
   checkXandOPlayers() {

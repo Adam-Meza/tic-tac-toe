@@ -8,7 +8,7 @@ let currentGame = {},
 const body = document.querySelector('.body'),
  nameInput = document.querySelector('.js-name-input'),
  userInputForm = document.querySelector('.js-user-input-form'),
- userPrompt = document.querySelector('.js-user-prompt');
+ userPrompt = document.querySelector('.js-user-prompt'),
  header = document.querySelector('.js-header'),
  
  gameBoard = document.querySelector('.js-game-board'),
@@ -146,7 +146,6 @@ let resetDOM = () => {
     }
   );
 };
-
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
 
