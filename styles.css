@@ -49,7 +49,7 @@ form {
   justify-content: center;
 }
 
-.num-form {
+.num-form, .mode-form {
   color:#e5a6c0;
   background-color: #f5ddf1;
 }
@@ -95,6 +95,8 @@ form {
     background-color: #8db4ca;
   }
 
+  .board-square 
+
 /* PLAYER BOX */
 
 .player-box {
@@ -139,7 +141,7 @@ button {
     transform: translateY(3px);
   }
 
-.num-players-btn-box {
+.num-players-btn-box, .mode-form {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -148,7 +150,7 @@ button {
   margin: 110px 0px 30px 0px;
 }
 
-.num-players-btn{
+.num-players-btn, .game-mode-btn {
   width: 120px;
   height:120px;
   font-size: 64px;

@@ -34,15 +34,15 @@ class Game {
   };
 
   addChoice(chosenSquareId) {
-    var playerLetter = this.currentPlayer.letter;
-    for (var i = 0; i < chosenSquareId.length; i++) {
-      this.chosenSquares[chosenSquareId.charAt(i)][playerLetter].push(playerLetter);
+    let playerLetter = this.currentPlayer.letter;
+    for (let i = 0; i < chosenSquareId.length; i++) {
+      this.chosenSquares[chosenSquareId.charAt(i)][playerLetter].push(chosenSquareId);
     };
   };
 
   checkWinOrDraw() {
-    var winConArray = ""
-    for (var i = 65; i < 73; i++) {
+    let winConArray = ""
+    for (let i = 65; i < 73; i++) {
       winConArray = this.chosenSquares[String.fromCharCode(i)][this.currentPlayer.letter];
       if (winConArray.length === 3) {
         this.isOver = true;

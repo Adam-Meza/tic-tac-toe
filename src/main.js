@@ -15,16 +15,37 @@ const body = document.querySelector('.body'),
  boardSquares = document.querySelectorAll('.js-board-square'),
  playerBoxes = document.querySelectorAll('.js-player-box'),
  playerNameTitles = document.querySelectorAll('.js-player-name'),
- winBoxHeaders = document.querySelectorAll('.js-win-box'),
+ winBox = document.querySelectorAll('.js-win-box'),
  winCounts = document.querySelectorAll('.js-win-count'),
 
  numPlayersBtnBox = document.querySelector('.js-num-players-btn-box'),
- onePlayerBtn = document.querySelector('.js-one-player-btn'),
- twoPlayerBtn = document.querySelector('.js-one-player-btn'),
+ gameModeBtnBox = document.querySelector('.js-game-mode-btn-box'),
  newGameBtn = document.querySelector('.js-new-game-button'),
  playBtn = document.querySelector('.js-play-btn');
+ 
+// NAVIGATION ATOMIC FUNCTIONS//
 
-// NAVIGATION FUNCTIONS//
+let navToGameModeForm = () => {
+  // userInputForm.classList = "mode-form js-user-input-form";
+  userPrompt.innerText = "Pick Difficulty Level";
+  gameModeBtnBox.toggleAttribute('hidden');
+  nameInput.toggleAttribute('hidden');
+  playBtn.toggleAttribute('hidden');
+  // numOfPlayers.toggleAttribute('hidden')
+}
+
+// let navToHardModeDOM = () => {
+//   body.background = "./assets/space.jpg"
+//   boardSquares.forEach(square => square.classList.add("hard"))
+//   winBox.classList.add("hard")
+//   header.classList.add("hard")
+//   newGameBtn.classList.add("hard")
+//   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
+//   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
+//   updateWinCounter();
+//   hideOrShowGameBoard();
+//   updateHeader();
+// }
 
 let navToFirstNameForm = () => {
   userPrompt.innerText = "What's Your Name?";
@@ -46,6 +67,7 @@ let hideOrShowInputElems = () => {
 };
 
 let hideOrShowGameBoard = () => {
+  console.log('test')
   gameBoard.toggleAttribute("hidden");
   newGameBtn.toggleAttribute("hidden");
   playerBoxes[0].toggleAttribute("hidden");
@@ -56,6 +78,8 @@ let hideOrShowGameBoard = () => {
 
 // DM/DOM MANIPULATION FOR FIRST GAME //
 
+let makeGenericPlayer = () => firstPlayer ? secondPlayer = new Player("Player 2") : firstPlayer = new Player("Player 1");
+
 let updateHeader = () => {
   if (currentGame.isDraw) {
     header.innerHTML = "It's a Draw!";
@@ -63,7 +87,7 @@ let updateHeader = () => {
     header.innerHTML = `${currentGame.currentPlayer.name} wins!`;
   } else {
     header.innerHTML = `It's ${currentGame.currentPlayer.name}'s Turn!`;
-  }
+  };
 };
 
 let updateWinCounter = () => {
@@ -76,7 +100,7 @@ let setFirstOrSecond = (newPlayer) => {
     firstPlayer = newPlayer;
   } else if (newPlayer) {
     secondPlayer = newPlayer;
-  } 
+  };
 };
 
 let resetDMforFirstGame = () => {
@@ -87,16 +111,18 @@ let resetDMforFirstGame = () => {
 };
 
 let resetDOMforFirstGame = () => {
-  winCounts[0].innerHTML = "0"
-  winCounts[1].innerHTML = "0"
+  winCounts[0].innerHTML = "0";
+  winCounts[1].innerHTML = "0";
   userInputForm.classList = "num-form js-user-input-form";
   userPrompt.innerText = "How Many Players?";
   body.background = "./assets/pond.jpg";
   playBtn.classList = "play-btn js-play-btn";
+  playBtn.innerText = "Continue As Guest"
+  header.innerHTML = "Let's Play Tic-Tac-Toe!";
 };
 
 let updateDOMforFirstGame = () => {
-  body.background = "./assets/sun.jpg";
+  currentGame.gameMode === "hard" ? body.background = "./assets/space.jpg" : body.background = "./assets/sun.jpg";
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
   playerNameTitles[1].innerText = currentGame.secondPlayer.name;
   updateWinCounter();
@@ -122,7 +148,7 @@ let checkStorageForPlayer = (userInput) => {
   makeNewPlayer(userInput);
 };
 
-let makeGenericPlayer = () => firstPlayer ? secondPlayer = new Player("Player 2") : firstPlayer = new Player("Player 1");
+
 
 // DOM MANIPULATION ATOMIC FUNCTIONS //
 
@@ -148,7 +174,6 @@ let resetDOM = () => {
 };
 
 // DOM MANIPULATION - BUNDLE FUNCTIONS //
-
 let updateDMforFirstGame = () => {
   currentGame = new Game(firstPlayer, secondPlayer);
   currentGame.establishXandOPlayers();
@@ -162,7 +187,7 @@ let pageNagivation = () => {
   } else if (!secondPlayer && numOfPlayers === "1") {
       currentGame = new OnePlayerGame(firstPlayer);
       currentGame.establishXandOPlayers();
-      updateDOMforFirstGame();
+      navToGameModeForm();
   } else if (firstPlayer && secondPlayer) {
     updateDMforFirstGame();
     updateDOMforFirstGame();
@@ -237,12 +262,19 @@ newGameBtn.addEventListener('click', navToNewGameForm);
 
 numPlayersBtnBox.addEventListener('click', () => {
   event.preventDefault();
-  if (event.target.id){
+  if (event.target.id) {
     numOfPlayers = event.target.id;
     pageNagivation();
     };
+  });
+
+gameModeBtnBox.addEventListener('click', () => {
+  event.preventDefault();
+  if (event.target.id === "hard" || event.target.id === "easy") {
+    currentGame.gameMode = event.target.id
+    updateDOMforFirstGame()
   }
-);
+})
 
 gameBoard.addEventListener('click', () => {
   if (event.target.id) {
@@ -250,5 +282,4 @@ gameBoard.addEventListener('click', () => {
     updateTargetSquare();
     updateDOM();
     };
-  }
-);
+  });
