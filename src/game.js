@@ -23,14 +23,14 @@ class Game {
     };
 
   initiateNewGame() {
-    numOfPlayers === "2" ? currentGame = new Game(this.secondPlayer, this.firstPlayer) :
-      currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer);
+    numOfPlayers === "2" ? currentGame = new Game(this.secondPlayer, this.firstPlayer) 
+      : currentGame = new OnePlayerGame(this.secondPlayer, this.firstPlayer);
   };
 
   passTurn() {
     this.turn += 1;
-    this.turn % 2 === 0 ? this.currentPlayer = this.secondPlayer : 
-    this.currentPlayer = this.firstPlayer;
+    this.turn % 2 === 0 ? this.currentPlayer = this.secondPlayer
+     : this.currentPlayer = this.firstPlayer;
   };
 
   addChoice(chosenSquareId) {

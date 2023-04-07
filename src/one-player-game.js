@@ -5,14 +5,14 @@ class OnePlayerGame extends Game {
     this.compChoice = "";
     this.gameMode = "";
     this.winCons = {
+      G: ["ADG", "BEGH", "CFG"],
+      H: ["BEGH", "AFH", "CDH"],
       A: ["ADG", "AE", "AFH"],
       B: ["BD", "BEGH", "BF"],
       C: ["CDH", "CE", "CFG"],
       D: ["ADG", "BD", "CDH"],
       E: ["BEGH", "AE", "CE"],
       F: ["AFH", "BF", "CFG"],
-      G: ["ADG", "BEGH", "CFG"],
-      H: ["BEGH", "AFH", "CDH"],
     };
   };
 
@@ -23,7 +23,7 @@ class OnePlayerGame extends Game {
 
   checkIfCompTurn() {
     if (this.currentPlayer.name === "Player 2") {
-      disableBoardSqaures();
+      disableSqaures();
       updateHeader();
       this.runCompTurn();
     };
@@ -80,32 +80,27 @@ class OnePlayerGame extends Game {
   };
 
   checkIfWinIsClose() {
-    return Object.keys(this.winCons).find(key => this.winCons[key].length === 1) ? true : false
-  }
+    return Object.keys(this.winCons).find(key => this.winCons[key].length === 1) ? true : false;
+  };
 
   chooseSquare() {
     let potentialWinConKeys = Object.keys(this.winCons)
       .filter(key => this.winCons[key].length === 1)
-      .filter(key => this.chosenSquares[key]["O"].length === 2 || this.chosenSquares[key]["X"].length === 2)
-    let compChoice = this.winCons[potentialWinConKeys[this.getRandomIndex(potentialWinConKeys)]][0]
-    this.compChoice = compChoice
+      .filter(key => this.chosenSquares[key]["O"].length === 2 || this.chosenSquares[key]["X"].length === 2);
+    let compChoice = this.winCons[potentialWinConKeys[this.getRandomIndex(potentialWinConKeys)]][0];
+    this.compChoice = compChoice;
   };
 
   setCompChoice() {
-    if (this.gameMode === "hard") {
-      this.setCompChoiceHardMode();
-    } else {
+    this.gameMode === "hard" ? this.setCompChoiceHardMode() :
       this.compChoice = this.availableSquares[this.getRandomIndex(this.availableSquares)];
-    };
   };
 
   reactiveSquares() {
     this.availableSquares.forEach((availSquare) => {
-      boardSquares.forEach((boardSquare) => {
-        if (availSquare === boardSquare.id) {
-          boardSquare.disabled = false;
-        };
-      });
+      boardSquares.forEach(boardSquare => availSquare === boardSquare.id ? 
+        boardSquare.disabled = false : null
+      )
     });
   };
   

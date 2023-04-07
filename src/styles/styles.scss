@@ -1,0 +1,239 @@
+/* WIDE RANDING RULES */
+
+$light-blue: #dceff3;
+$med-blue: #8db4ca;
+
+$light-orange: #fedca8;
+$med-orange: #e6af56; 
+$dark-orange: #e29339;
+
+body {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-image: 2000px 1000px;
+}
+
+button,
+form,
+.standard-style,
+.board-square{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: none;
+  color: #b17822;
+  border: none;
+  border-radius: 30px;
+  font-family: 'Amatic SC', cursive;
+}
+
+/* MAIN CONTAINER */
+
+.main-container{
+  height: 800px;
+  justify-content: center;
+}
+
+.game-board, 
+form {
+  width: 450px;
+  height: 450px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around
+}
+
+form {
+  margin-bottom: 100px;
+  font-size: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.num-form {
+  color:#e5a6c0;
+  background-color: #f5ddf1;
+}
+
+.mode-form {
+  color: $med-orange;
+  background-color: $light-orange;
+}
+
+.name-form{
+  color: $med-blue;
+  background-color: $light-blue;
+}
+
+.second-name-form {
+  color:#a8bd82;
+  background-color: #e1e9ba;
+}
+
+  .user-prompt{
+    margin: 10px;
+    padding-top: 20px;
+  }
+
+  .name-input{
+    width: 300px;
+    height: 70px;
+    padding:4px;
+    font-size: 45px;
+    text-indent: 10px;
+    outline: none;
+    text-align: center;
+    margin: 50px;
+  }
+
+.board-square {
+  width: 120px;
+  height: 120px;
+  background-color: $light-blue;
+
+  img {
+    width: 80px;
+    height: 80px;
+  }
+
+  &:hover{
+    background-color: $med-blue;
+  }
+}
+
+.O {
+  background-color: #e1e9ba;
+}
+
+.X{
+  background-color: #f5ddf1;
+}  
+
+/* PLAYER BOX */
+
+.player-box {
+  margin: 0px 70px 100px 70px;
+}
+
+.win-box {
+  width: 200px;
+  height: 300px;
+  justify-content: center;
+  background-color: #eee0c0;
+}
+
+  .win-count {
+    width: 20px;
+    height: 80px;
+    font-size: 100px;
+    padding-top: 100px;
+    margin: 0px;
+  }
+  
+  .wins {
+    width: 60px;
+    font-size: 40px;
+  }
+
+/* BUTTONS */
+
+button {
+  width: 200px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  padding: 5px 20px 5px 20px;
+  background-color: #eee0c0;
+  cursor: pointer;
+  
+  &:active {
+    transform: translateY(3px);
+  }
+}
+
+.num-players-btn-box, .game-mode-btn-box {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  margin: 110px 0px 30px 0px;
+}
+
+.num-players-btn, .game-mode-btn {
+  width: 120px;
+  height:120px;
+  font-size: 64px;
+  color: #f5ddf1;
+  background-color: #e5a6c0;
+}
+
+  .num-players-btn:hover, .num-players-btn:active {
+    background-color: #c36a81;
+  }
+
+.game-mode-btn {
+  color: $light-orange;
+  background-color: $med-orange;
+
+    &:hover {
+      background-color: $dark-orange;
+    }
+}
+
+.play-btn {
+  color: $light-blue;
+  background-color: $med-blue;
+  
+  &:hover, &:active {
+    background-color: #6095b3;
+  }
+}
+
+.second-play-btn{
+  color: #e1e9ba;
+  background-color:#a8bd82;
+
+  &:hover, &:active {
+    background-color: #88994b;
+  }
+}
+
+.new-game-button {
+  font-size: 40px;
+  color: #b17822;
+  
+  &:hover, &:active {
+    background-color: #cfb082;
+  }
+}
+
+/* MISC */
+
+.header,
+.player-name{
+  font-size: 64px;
+  padding-top: 100px;
+  margin: 10px;
+}
+
+p {
+  width: 100%;
+  height: 43%;
+}
+
+:disabled {
+  pointer-events: none;
+}
+
+[hidden] {
+  display: none;
+}

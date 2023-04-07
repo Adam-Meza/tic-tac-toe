@@ -1,5 +1,4 @@
 /* WIDE RANDING RULES */
-
 body {
   width: auto;
   height: auto;
@@ -13,7 +12,7 @@ body {
 button,
 form,
 .standard-style,
-.board-square{
+.board-square {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,24 +20,23 @@ form,
   color: #b17822;
   border: none;
   border-radius: 30px;
-  font-family: 'Amatic SC', cursive;
+  font-family: "Amatic SC", cursive;
 }
 
 /* MAIN CONTAINER */
-
-.main-container{
+.main-container {
   height: 800px;
   justify-content: center;
 }
 
-.game-board, 
+.game-board,
 form {
   width: 450px;
   height: 450px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around
+  justify-content: space-around;
 }
 
 form {
@@ -49,56 +47,64 @@ form {
   justify-content: center;
 }
 
-.num-form, .mode-form {
-  color:#e5a6c0;
+.num-form {
+  color: #e5a6c0;
   background-color: #f5ddf1;
 }
 
-.name-form{
-  color:#8db4ca;
+.mode-form {
+  color: #e6af56;
+  background-color: #fedca8;
+}
+
+.name-form {
+  color: #8db4ca;
   background-color: #dceff3;
 }
 
 .second-name-form {
-  color:#a8bd82;
+  color: #a8bd82;
   background-color: #e1e9ba;
 }
 
-  .user-prompt{
-    margin: 10px;
-    padding-top: 20px;
-  }
+.user-prompt {
+  margin: 10px;
+  padding-top: 20px;
+}
 
-  .name-input{
-    width: 300px;
-    height: 70px;
-    padding:4px;
-    font-size: 45px;
-    text-indent: 10px;
-    outline: none;
-    text-align: center;
-    margin: 50px;
-  }
+.name-input {
+  width: 300px;
+  height: 70px;
+  padding: 4px;
+  font-size: 45px;
+  text-indent: 10px;
+  outline: none;
+  text-align: center;
+  margin: 50px;
+}
 
 .board-square {
   width: 120px;
   height: 120px;
   background-color: #dceff3;
 }
+.board-square img {
+  width: 80px;
+  height: 80px;
+}
+.board-square:hover {
+  background-color: #8db4ca;
+}
 
-  .board-square img{
-    width: 80px;
-    height: 80px;
-  }
+.O {
+  background-color: #e1e9ba;
+}
 
-  .board-square:hover{
-    background-color: #8db4ca;
-  }
-
-  .board-square 
+.X {
+  background-color: #f5ddf1;
+}
 
 /* PLAYER BOX */
-
 .player-box {
   margin: 0px 70px 100px 70px;
 }
@@ -110,21 +116,20 @@ form {
   background-color: #eee0c0;
 }
 
-  .win-count {
-    width: 20px;
-    height: 80px;
-    font-size: 100px;
-    padding-top: 100px;
-    margin: 0px;
-  }
-  
-  .wins {
-    width: 60px;
-    font-size: 40px;
-  }
+.win-count {
+  width: 20px;
+  height: 80px;
+  font-size: 100px;
+  padding-top: 100px;
+  margin: 0px;
+}
+
+.wins {
+  width: 60px;
+  font-size: 40px;
+}
 
 /* BUTTONS */
-
 button {
   width: 200px;
   height: 80px;
@@ -136,12 +141,11 @@ button {
   background-color: #eee0c0;
   cursor: pointer;
 }
+button:active {
+  transform: translateY(3px);
+}
 
-  button:active {
-    transform: translateY(3px);
-  }
-
-.num-players-btn-box, .mode-form {
+.num-players-btn-box, .game-mode-btn-box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -152,47 +156,51 @@ button {
 
 .num-players-btn, .game-mode-btn {
   width: 120px;
-  height:120px;
+  height: 120px;
   font-size: 64px;
   color: #f5ddf1;
   background-color: #e5a6c0;
 }
 
-  .num-players-btn:hover, .num-players-btn:active {
-    background-color: #c36a81;
-  }
+.num-players-btn:hover, .num-players-btn:active {
+  background-color: #c36a81;
+}
+
+.game-mode-btn {
+  color: #fedca8;
+  background-color: #e6af56;
+}
+.game-mode-btn:hover {
+  background-color: #e29339;
+}
 
 .play-btn {
   color: #dceff3;
-  background-color:#8db4ca;
+  background-color: #8db4ca;
+}
+.play-btn:hover, .play-btn:active {
+  background-color: #6095b3;
 }
 
-  .play-btn:hover, .play-btn:active {
-    background-color: #6095b3;
-  }
-
-.second-play-btn{
+.second-play-btn {
   color: #e1e9ba;
-  background-color:#a8bd82;
+  background-color: #a8bd82;
+}
+.second-play-btn:hover, .second-play-btn:active {
+  background-color: #88994b;
 }
 
-  .second-play-btn:hover, .second-play-btn:active {
-    background-color: #88994b;
-  }
-
-.new-game-button{
+.new-game-button {
   font-size: 40px;
   color: #b17822;
 }
-
-  .new-game-button:hover, .new-game-button:active{
-    background-color: #cfb082;
-  }
+.new-game-button:hover, .new-game-button:active {
+  background-color: #cfb082;
+}
 
 /* MISC */
-
 .header,
-.player-name{
+.player-name {
   font-size: 64px;
   padding-top: 100px;
   margin: 10px;
@@ -203,18 +211,10 @@ p {
   height: 43%;
 }
 
-.O {
-  background-color: #e1e9ba;
-}
-
-.X{
-  background-color: #f5ddf1;
-}
-
 :disabled {
   pointer-events: none;
 }
 
 [hidden] {
   display: none;
-}
+}/*# sourceMappingURL=styles.css.map */

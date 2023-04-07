@@ -6,7 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./src/styles/styles.css">
   </head>
   <body  class ="body" background="./assets/pond.jpg">
     <aside class="player-box js-player-box standard-style" hidden>
@@ -18,7 +18,7 @@
     </aside>
     <main class="main-container standard-style">
       <h1 class="header js-header">Welcome! Let's Play Tic-Tac-Toe!</h1>
-      <form class="num-form js-user-input-form"  >
+      <form class="num-form js-user-input-form">
         <h2 class="user-prompt js-user-prompt">How Many Players?</h2>
         <input type="text" class="name-input js-name-input standard-style" onkeypress="enterPressPlay(event)" hidden>
         <div class="num-players-btn-box js-num-players-btn-box">
@@ -26,8 +26,8 @@
           <button class="num-players-btn" id="2">2</button>
         </div>
         <div class="game-mode-btn-box js-game-mode-btn-box" hidden>
-          <button class="game-mode-btn" id="easy">1</button>
-          <button class="game-mode-btn" id="hard">2</button>
+          <button class="game-mode-btn" id="easy">EASY</button>
+          <button class="game-mode-btn" id="hard">Hard</button>
         </div>
         <button class="play-btn js-play-btn" hidden>Continue as Guest</button>
       </form>
