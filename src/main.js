@@ -100,8 +100,6 @@ let setFirstOrSecond = (newPlayer) => {
   };
 };
 
-
-
 let updateDOMforFirstGame = () => {
   currentGame.gameMode === "hard" ? body.background = "./assets/space.jpg" : body.background = "./assets/sun.jpg";
   playerNameTitles[0].innerText = currentGame.firstPlayer.name;
