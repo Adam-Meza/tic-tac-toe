@@ -1,11 +1,22 @@
-/* WIDE RANDING RULES */
+/* COLORS */ 
 
 $light-blue: #dceff3;
 $med-blue: #8db4ca;
+$dark-blue: #6095b3; 
 
 $light-orange: #fedca8;
 $med-orange: #e6af56; 
 $dark-orange: #e29339;
+
+$light-pink: #f5ddf1;
+$med-pink: #e5a6c0;
+$dark-pink: #c36a81;
+
+$light-green: #e1e9ba; 
+$med-green: #a8bd82;
+$dark-green: #88994b;
+
+/* WIDE RANDING RULES */
 
 body {
   width: auto;
@@ -57,8 +68,8 @@ form {
 }
 
 .num-form {
-  color:#e5a6c0;
-  background-color: #f5ddf1;
+  color:$light-pink;
+  background-color: $light-pink;
 }
 
 .mode-form {
@@ -72,8 +83,8 @@ form {
 }
 
 .second-name-form {
-  color:#a8bd82;
-  background-color: #e1e9ba;
+  color: $med-green;
+  background-color: $light-green;
 }
 
   .user-prompt{
@@ -108,11 +119,11 @@ form {
 }
 
 .O {
-  background-color: #e1e9ba;
+  background-color: $light-green;
 }
 
 .X{
-  background-color: #f5ddf1;
+  background-color: $light-pink;
 }  
 
 /* PLAYER BOX */
@@ -172,12 +183,12 @@ button {
   width: 120px;
   height:120px;
   font-size: 64px;
-  color: #f5ddf1;
-  background-color: #e5a6c0;
+  color: $light-pink;
+  background-color: $light-pink;
 }
 
   .num-players-btn:hover, .num-players-btn:active {
-    background-color: #c36a81;
+    background-color: $dark-pink;
   }
 
 .game-mode-btn {
@@ -194,16 +205,16 @@ button {
   background-color: $med-blue;
   
   &:hover, &:active {
-    background-color: #6095b3;
+    background-color: $dark-blue;
   }
 }
 
 .second-play-btn{
-  color: #e1e9ba;
-  background-color:#a8bd82;
+  color: $light-green;
+  background-color: $med-green;
 
   &:hover, &:active {
-    background-color: #88994b;
+    background-color: $dark-green;
   }
 }
 
