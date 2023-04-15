@@ -5,14 +5,14 @@ class OnePlayerGame extends Game {
     this.compChoice = "";
     this.gameMode = "";
     this.winCons = {
-      G: ["ADG", "BEGH", "CFG"],
-      H: ["BEGH", "AFH", "CDH"],
       A: ["ADG", "AE", "AFH"],
       B: ["BD", "BEGH", "BF"],
       C: ["CDH", "CE", "CFG"],
       D: ["ADG", "BD", "CDH"],
       E: ["BEGH", "AE", "CE"],
       F: ["AFH", "BF", "CFG"],
+      G: ["ADG", "BEGH", "CFG"],
+      H: ["BEGH", "AFH", "CDH"],
     };
   };
 
@@ -69,26 +69,29 @@ class OnePlayerGame extends Game {
   };
 
   setCompChoiceHardMode() {
-    if (this.turn === 1) {
-      let cornerSquares = ["ADG", "CDH", "CFG", "AFH"];
-      this.compChoice = cornerSquares[this.getRandomIndex(cornerSquares)];
-    } else if (this.checkIfWinIsClose()) {
-      this.chooseSquare();
-    } else {
-      this.compChoice = this.availableSquares[this.getRandomIndex(this.availableSquares)];
-    };
+    let canCompWin = this.canAPlayerWin("O");
+    let canUserWin = this.canAPlayerWin("X");
+
+    this.turn === 1 ? this.pickARandomCorner() 
+      : canCompWin ? this.attackOrBlock("O")
+      : canUserWin ? this.attackOrBlock("X")
+      : this.compChoice = this.availableSquares[this.getRandomIndex(this.availableSquares)]
   };
 
-  checkIfWinIsClose() {
-    return Object.keys(this.winCons).find(key => this.winCons[key].length === 1) ? true : false;
+  pickARandomCorner() {
+    let cornerSquares = ["ADG", "CDH", "CFG", "AFH"];
+    this.compChoice = cornerSquares[this.getRandomIndex(cornerSquares)];
   };
 
-  chooseSquare() {
-    let potentialWinConKeys = Object.keys(this.winCons)
-      .filter(key => this.winCons[key].length === 1)
-      .filter(key => this.chosenSquares[key]["O"].length === 2 || this.chosenSquares[key]["X"].length === 2);
-    let compChoice = this.winCons[potentialWinConKeys[this.getRandomIndex(potentialWinConKeys)]][0];
-    this.compChoice = compChoice;
+  attackOrBlock(playerLetter) {
+    let winningKey = (Object.keys(this.winCons)
+    .filter(key => this.winCons[key].length === 1 && this.chosenSquares[key][playerLetter].length === 2))[0]
+    this.compChoice = this.winCons[winningKey][0];
+  };
+
+  canAPlayerWin(playerLetter) {
+   return (Object.keys(this.winCons)
+    .some(key => this.winCons[key].length === 1 && this.chosenSquares[key][playerLetter].length === 2))
   };
 
   setCompChoice() {

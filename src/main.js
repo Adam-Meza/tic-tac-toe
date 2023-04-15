@@ -30,7 +30,6 @@ let navToGameModeForm = () => {
   gameModeBtnBox.toggleAttribute('hidden');
   nameInput.toggleAttribute('hidden');
   playBtn.toggleAttribute('hidden');
-  // numOfPlayers.toggleAttribute('hidden')
 }
 
 // let navToHardModeDOM = () => {
@@ -116,8 +115,8 @@ let makeNewPlayer = (userInput) => {
 };
 
 let checkStorageForPlayer = (userInput) => {
-  var newPlayer = {};
-  for (var i = 0; i < localStorage.length; i++) {
+  let newPlayer = {};
+  for (let i = 0; i < localStorage.length; i++) {
     if (localStorage.key([i]) === `${userInput}`) {
       newPlayer = JSON.parse(localStorage.getItem(`${userInput}`));
       setFirstOrSecond(newPlayer);
@@ -194,7 +193,7 @@ let  playBtnFunctionality = () => {
   if (!nameInput.value) {
     makeGenericPlayer();
   } else {
-    var userInput = nameInput.value.toLowerCase();
+    let userInput = nameInput.value.toLowerCase();
     checkStorageForPlayer(userInput);
   };
   clearInput();

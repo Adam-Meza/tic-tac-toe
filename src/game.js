@@ -38,6 +38,7 @@ class Game {
     for (let i = 0; i < chosenSquareId.length; i++) {
       this.chosenSquares[chosenSquareId.charAt(i)][playerLetter].push(chosenSquareId);
     };
+    console.log(currentGame)
   };
 
   checkWinOrDraw() {
