@@ -1,0 +1,17 @@
+@import "./variables";
+
+@mixin standard-styling {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  outline: none;
+  color: #b17822;
+  border: none;
+  border-radius: 30px;
+  font-family: 'Amatic SC', cursive;
+}
+
+@mixin colors ($color, $background) {
+  color: $color;
+  background-color: $background;
+}

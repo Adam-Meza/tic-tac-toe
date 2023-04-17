@@ -61,9 +61,8 @@ class OnePlayerGame extends Game {
   };
 
   removeSquareFromWinCons(chosenSquareId) {
-    let winConArray = "";
     for (var i = 0; i < chosenSquareId.length; i++) {
-      winConArray = this.winCons[chosenSquareId.charAt(i)];
+      let winConArray = this.winCons[chosenSquareId.charAt(i)];
       winConArray.splice((winConArray.findIndex(item => item === chosenSquareId)), 1);
     };
   };
@@ -79,7 +78,7 @@ class OnePlayerGame extends Game {
   };
 
   pickARandomCorner() {
-    let cornerSquares = ["ADG", "CDH", "CFG", "AFH"];
+    const cornerSquares = ["ADG", "CDH", "CFG", "AFH"];
     this.compChoice = cornerSquares[this.getRandomIndex(cornerSquares)];
   };
 

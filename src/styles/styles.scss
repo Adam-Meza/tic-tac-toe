@@ -1,20 +1,6 @@
-/* COLORS */ 
-
-$light-blue: #dceff3;
-$med-blue: #8db4ca;
-$dark-blue: #6095b3; 
-
-$light-orange: #fedca8;
-$med-orange: #e6af56; 
-$dark-orange: #e29339;
-
-$light-pink: #f5ddf1;
-$med-pink: #e5a6c0;
-$dark-pink: #c36a81;
-
-$light-green: #e1e9ba; 
-$med-green: #a8bd82;
-$dark-green: #88994b;
+@import './variables';
+@import './buttons';
+@import './mixins';
 
 /* WIDE RANDING RULES */
 
@@ -28,23 +14,10 @@ body {
   background-image: 2000px 1000px;
 }
 
-button,
-form,
-.standard-style,
-.board-square{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  outline: none;
-  color: #b17822;
-  border: none;
-  border-radius: 30px;
-  font-family: 'Amatic SC', cursive;
-}
-
 /* MAIN CONTAINER */
 
 .main-container{
+  @include standard-styling();
   height: 800px;
   justify-content: center;
 }
@@ -60,6 +33,7 @@ form {
 }
 
 form {
+  @include standard-styling();
   margin-bottom: 100px;
   font-size: 50px;
   display: flex;
@@ -68,23 +42,19 @@ form {
 }
 
 .num-form {
-  color:$light-pink;
-  background-color: $light-pink;
+  @include colors($med-pink, $light-pink);
 }
 
 .mode-form {
-  color: $med-orange;
-  background-color: $light-orange;
+  @include colors($med-orange, $light-orange);
 }
 
 .name-form{
-  color: $med-blue;
-  background-color: $light-blue;
+  @include colors($med-blue, $light-blue);
 }
 
 .second-name-form {
-  color: $med-green;
-  background-color: $light-green;
+  @include colors($med-green, $light-green);
 }
 
   .user-prompt{
@@ -93,6 +63,7 @@ form {
   }
 
   .name-input{
+    @include standard-styling();
     width: 300px;
     height: 70px;
     padding:4px;
@@ -129,14 +100,16 @@ form {
 /* PLAYER BOX */
 
 .player-box {
+  @include standard-styling();
   margin: 0px 70px 100px 70px;
 }
 
 .win-box {
+  @include standard-styling();
   width: 200px;
   height: 300px;
   justify-content: center;
-  background-color: #eee0c0;
+  background-color: $light-brown;
 }
 
   .win-count {
@@ -151,81 +124,6 @@ form {
     width: 60px;
     font-size: 40px;
   }
-
-/* BUTTONS */
-
-button {
-  width: 200px;
-  height: 80px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 30px;
-  padding: 5px 20px 5px 20px;
-  background-color: #eee0c0;
-  cursor: pointer;
-  
-  &:active {
-    transform: translateY(3px);
-  }
-}
-
-.num-players-btn-box, .game-mode-btn-box {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-  margin: 110px 0px 30px 0px;
-}
-
-.num-players-btn, .game-mode-btn {
-  width: 120px;
-  height:120px;
-  font-size: 64px;
-  color: $light-pink;
-  background-color: $light-pink;
-}
-
-  .num-players-btn:hover, .num-players-btn:active {
-    background-color: $dark-pink;
-  }
-
-.game-mode-btn {
-  color: $light-orange;
-  background-color: $med-orange;
-
-    &:hover {
-      background-color: $dark-orange;
-    }
-}
-
-.play-btn {
-  color: $light-blue;
-  background-color: $med-blue;
-  
-  &:hover, &:active {
-    background-color: $dark-blue;
-  }
-}
-
-.second-play-btn{
-  color: $light-green;
-  background-color: $med-green;
-
-  &:hover, &:active {
-    background-color: $dark-green;
-  }
-}
-
-.new-game-button {
-  font-size: 40px;
-  color: #b17822;
-  
-  &:hover, &:active {
-    background-color: #cfb082;
-  }
-}
 
 /* MISC */
 
